@@ -7,12 +7,11 @@ import {FormControl , FormGroup} from '@angular/forms'
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  Data = new FormGroup({
-    uname : new FormControl(),
-    password: new FormControl()
-  })
-  login(){
-    console.log(this.Data.value.uname , this.Data.value.password )
+  UserName : any = ''
+  password : any = ''
+  Login(item:any){
+    console.log(item)
+    this.UserName =''
+    this.password =''
   }
-
 }
