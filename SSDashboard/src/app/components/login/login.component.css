@@ -1,0 +1,7 @@
+.form{
+    padding: 20px;
+}
+.mat-toolbar span {
+    text-align: center;
+    width: 90%; /* Ensure the entire toolbar width is used */
+}
