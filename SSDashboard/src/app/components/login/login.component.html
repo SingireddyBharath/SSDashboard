@@ -2,16 +2,17 @@
 <mat-card fxFlex="30">
    <mat-toolbar color="primary"><span>Login</span></mat-toolbar>
 <br>
-<form fxLayoutAlign="stretch" fxLayout="column" class="form">
+<form fxLayoutAlign="stretch" fxLayout="column" class="form" [formGroup]="Data" >
     <mat-form-field>
       <mat-label>User Name</mat-label>
-      <input matInput>
+      <input matInput formControlName = "uname">
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input type="password" matInput>
+      <input type="password" matInput formControlName = "password">
+  
     </mat-form-field>
-    <button type="submit" mat-button color="primary">Submit</button>
+    <button (click)="login()" mat-button color="primary">Login</button>
   </form>
 </mat-card>
 </div>

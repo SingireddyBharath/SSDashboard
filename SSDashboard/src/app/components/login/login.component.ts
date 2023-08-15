@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-
+import {FormControl , FormGroup} from '@angular/forms'
 
 @Component({
   selector: 'app-login',
@@ -8,5 +7,12 @@ import {MatCardModule} from '@angular/material/card';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  Data = new FormGroup({
+    uname : new FormControl(),
+    password: new FormControl()
+  })
+  login(){
+    console.log(this.Data.value.uname , this.Data.value.password )
+  }
 
 }
