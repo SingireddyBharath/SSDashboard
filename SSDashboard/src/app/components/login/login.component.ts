@@ -1,21 +1,25 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms'
 import { AppService } from 'src/app/services/app.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private appService: AppService) { }
+  constructor(private appService: AppService, private router: Router) { }
   userName: any = ''
   password: any = ''
-  Login(details: any) {
-    this.appService.getUserDetails().subscribe((res) => {
-      const data = res[0]
-      const isValid = (data.userName === details.userName && data.password === details.password)
-      console.log(isValid);
+  loginFailed: boolean = false
+  Login(userDetails: any) {
+    this.appService.validateUser().subscribe((response) => {
+      if (response[0].userName === userDetails.userName && response[0].password === userDetails.password) {
+        this.appService.setAuth(true);
+        this.router.navigate(['/admin']);
+      }
+      else {
+        this.loginFailed = true;
+      }
     })
   }
 }
