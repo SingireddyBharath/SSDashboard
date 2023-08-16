@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormControl , FormGroup} from '@angular/forms'
+import { MatCardLgImage } from '@angular/material/card';
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
@@ -13,6 +14,6 @@ export class LoginComponent {
   Login(item:any){
     console.log(item)
     this.UserName =''
-    this.password =''
+    this.password ='' 
   }
 }
