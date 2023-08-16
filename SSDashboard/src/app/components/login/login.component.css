@@ -1,7 +1,14 @@
 .form{
     padding: 20px;
+    border-radius: 20px;
 }
 .mat-toolbar span {
     text-align: center;
-    width: 90%; /* Ensure the entire toolbar width is used */
+    width: 100%; /* Ensure the entire toolbar width is used */
+}
+mat-toolbar{
+    border-radius: 20px 20px 0px 0px;
+}   
+input{
+        border-radius: 20px;
 }
