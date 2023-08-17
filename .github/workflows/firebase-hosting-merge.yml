@@ -1,12 +1,12 @@
-name: Deploy to Firebase Hosting
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,14 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
+        working-directory: ./SSDashboard
 
-      - name: Build the Angular project
+      - name: Build Angular Project
         run: npx run build --prod
+        working-directory: ./SSDashboard
 
       - name: Deploy to Firebase Hosting
         run: npx firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+        working-directory: ./SSDashboard
