@@ -15,7 +15,7 @@ jobs:
           node-version: "16.x"
 
       - run: npm install
-      - run: npx run build
+      - run: ng build --prod
 
       - name: GitHub Action for Firebase
         uses: w9jds/firebase-action@v12.4.0
