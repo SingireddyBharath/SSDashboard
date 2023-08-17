@@ -1,14 +1,13 @@
-name: Deploy LetCode in FireBase
+name: Deploy Angular in FireBase
 
 on:
   push:
     branches:
-      - master
+      - dev
 
 jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-node@master
