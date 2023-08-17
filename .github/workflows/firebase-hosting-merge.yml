@@ -23,7 +23,7 @@ jobs:
         working-directory: ./SSDashboard
 
       - name: Build Angular Project
-        run: npx ng build --prod
+        run: ng build --prod
         working-directory: ./SSDashboard
 
       - name: Deploy to Firebase Hosting
