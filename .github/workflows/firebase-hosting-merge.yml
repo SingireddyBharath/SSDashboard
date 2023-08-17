@@ -24,14 +24,11 @@ jobs:
           npm run build
 
       - name: Change directory and deploy Firebase
-        run: |
-          cd SSDashboard
-          uses: w9jds/firebase-action@master
-          with:
-            args: deploy --only hosting
-            env:
-              FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
-
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
 # name: Build and Deploy
 
 # on:
