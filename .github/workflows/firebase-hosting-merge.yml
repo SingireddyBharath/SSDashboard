@@ -1,42 +1,82 @@
-name: Build and Deploy
+# name: Build and Deploy
 
+# on:
+#   push:
+#     branches:
+#       - dev
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 16.x
+
+#       - name: Install Angular CLI
+#         run: npm install -g @angular/cli
+
+#       - name: Install Dependencies
+#         run: npm install
+#         working-directory: ./SSDashboard
+
+#       - name: Build Angular Project
+#         run: ng build
+#         working-directory: ./SSDashboard
+
+#       - name: Install Firebase CLI
+#         run: npm install -g firebase-tools
+
+#       - name: GitHub Action for Firebase
+
+#         uses: w9jds/firebase-action@v12.4.0
+#         with:
+#           args: deploy --only hosting
+#           working-directory: ./SSDashboard
+#         env:
+#           FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
+
+name: Build and Deploy
 on:
   push:
     branches:
       - dev
-
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
-
+      - name: Checkout Repo
+        uses: actions/checkout@dev
       - name: Install Dependencies
         run: npm install
-        working-directory: ./SSDashboard
-
-      - name: Build Angular Project
-        run: ng build
-        working-directory: ./SSDashboard
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: GitHub Action for Firebase
-
-        uses: w9jds/firebase-action@v12.4.0
+      - name: Build
+        run: npm run build-prod
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@dev
+        with:
+          name: dist
+          path: dist
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@dev
+      - name: Download Artifact
+        uses: actions/download-artifact@dev
+        with:
+          name: dist
+          path: dist
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
-          working-directory: ./SSDashboard
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
