@@ -15,17 +15,17 @@ jobs:
           node-version: "16.x"
       - name: Change directory and install dependencies
         run: |
-          cd ssdashboard
+          cd SSDashboard
           npm install
 
       - name: Change directory and run build
         run: |
-          cd ssdashboard
+          cd SSDashboard
           npm run build
 
       - name: Change directory and deploy Firebase
         run: |
-          cd ssdashboard
+          cd SSDashboard
           uses: w9jds/firebase-action@master
           with:
             args: deploy --only hosting
