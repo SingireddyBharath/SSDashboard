@@ -13,13 +13,25 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: "16.x"
-      - run: npm install
-      - run: npm run build
-      - uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
+      - name: Change directory and install dependencies
+        run: |
+          cd ssdashboard
+          npm install
+
+      - name: Change directory and run build
+        run: |
+          cd ssdashboard
+          npm run build
+
+      - name: Change directory and deploy Firebase
+        run: |
+          cd ssdashboard
+          uses: w9jds/firebase-action@master
+          with:
+            args: deploy --only hosting
+            env:
+              FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
+
 # name: Build and Deploy
 
 # on:
