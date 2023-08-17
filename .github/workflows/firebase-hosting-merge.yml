@@ -56,7 +56,7 @@ jobs:
         uses: actions/checkout@master
       - name: Install Dependencies
         run: npm install
-       working-directory: ./SSDashboard
+        working-directory: ./SSDashboard
       - name: Build
         run: npm run build-prod
         working-directory: ./SSDashboard
