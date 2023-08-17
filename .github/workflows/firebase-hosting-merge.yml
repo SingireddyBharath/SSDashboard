@@ -29,6 +29,10 @@ jobs:
         run: ng build
         working-directory: ./SSDashboard
 
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
       - name: Deploy to Firebase Hosting
         run: npm firebase deploy --only hosting --token "1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4"
         working-directory: ./SSDashboard
+s
