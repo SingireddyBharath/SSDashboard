@@ -82,6 +82,6 @@ jobs:
         env:
           FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
         run: |
-          cd SSDashboard
+          dir
           npm ci
           npx firebase deploy --only hosting
