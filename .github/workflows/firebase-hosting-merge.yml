@@ -3,7 +3,8 @@ name: Deploy LetCode in FireBase
 on:
   push:
     branches:
-      - dev
+      - master
+
 jobs:
   firebase-deploy:
     runs-on: ubuntu-latest
@@ -13,24 +14,13 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: "16.x"
-      - name: Change directory and install dependencies
-        run: |
-          cd SSDashboard
-          npm install
-
-      - name: Change directory and run build
-        run: |
-          cd SSDashboard
-          npm run build
-      - name: Change directory to SSDashboard
-        run: cd SSDashboard
-      - name: Change directory and deploy Firebase
-        uses: w9jds/firebase-action@master
+      - run: npm install
+      - run: npm run build
+      - uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
-          
 # name: Build and Deploy
 
 # on:
