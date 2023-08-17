@@ -1,3 +1,25 @@
+name: Deploy LetCode in FireBase
+
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  firebase-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: "16.x"
+      - run: npm install
+      - run: npm run build
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
 # name: Build and Deploy
 
 # on:
@@ -41,44 +63,44 @@
 #         env:
 #           FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
 
-name: Build and Deploy
-on:
-  push:
-    branches:
-      - dev
+# name: Build and Deploy
+# on:
+#   push:
+#     branches:
+#       - dev
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Install Dependencies
-        run: npm install
-        working-directory: ./SSDashboard
-      - name: Build
-        run: npm run build
-        working-directory: ./SSDashboard
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: dist
-          path: dist
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-        with:
-          name: dist
-          path: dist
-      # - name: List Files in Working Directory
-      #   # run: cd SSDashboard
-      #   working-directory: ./SSDashboard
-      - name: Deploy to Firebase
-        env:
-          FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
-        run: npx firebase deploy --only hosting
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@master
+#       - name: Install Dependencies
+#         run: npm install
+#         working-directory: ./SSDashboard
+#       - name: Build
+#         run: npm run build
+#         working-directory: ./SSDashboard
+#       - name: Archive Production Artifact
+#         uses: actions/upload-artifact@master
+#         with:
+#           name: dist
+#           path: dist
+#   deploy:
+#     name: Deploy
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repo
+#         uses: actions/checkout@master
+#         with:
+#           name: dist
+#           path: dist
+#       # - name: List Files in Working Directory
+#       #   # run: cd SSDashboard
+#       #   working-directory: ./SSDashboard
+#       - name: Deploy to Firebase
+#         env:
+#           FIREBASE_TOKEN: 1//0gjaxi9uPyoRJCgYIARAAGBASNwF-L9Ir7lrVFdrw9OKA-IzTk80tTyzctafrHCqMeSHiNwIkPtUc8pTs1rKv2SK1XvcegJzmzu4
+#         run: npx firebase deploy --only hosting
