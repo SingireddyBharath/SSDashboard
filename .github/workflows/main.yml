@@ -3,7 +3,7 @@ name: Build & Deploy to Firebase
 on:
   push:
     branches:
-      - bharath
+      - dev
 
 jobs:
   Build-Deploy:
@@ -23,7 +23,7 @@ jobs:
       - name: Build Angular application
         run: sudo npx ng build
 
-      - name: Deploy to Firebase 
+      - name: Deploy to Firebase
         uses: w9jds/firebase-action@v12.4.0
         with:
           args: deploy --only hosting
