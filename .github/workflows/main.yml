@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Build Angular application
-        run: npx ng build
+        run: sudo npx ng build
 
       - name: Deploy to Firebase 
         uses: w9jds/firebase-action@v12.4.0
