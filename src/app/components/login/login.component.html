@@ -1,0 +1,44 @@
+<div fxLayoutAlign="center center" fxFlexFill>
+  <mat-card fxFlex="30">
+    <mat-toolbar color="primary"><span>Login !</span></mat-toolbar>
+    <br />
+    <span *ngIf="loginFailed" style="color: red; text-align: center"
+      >Credentials not found. Please try again.</span
+    >
+    <form
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="form"
+      #UserDetails="ngForm"
+      (ngSubmit)="Login(UserDetails.value)"
+    >
+      <mat-form-field>
+        <mat-label>User Name</mat-label>
+        <input
+          matInput
+          name="userName"
+          required
+          [(ngModel)]="userName"
+          ngModel
+        />
+      </mat-form-field>
+      <!-- <span *ngIf="UserName.touched && UserName.invalid" style="color: red;text-align: center;">User name cannot be empty</span> -->
+      <br />
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          required
+          name="password"
+          [(ngModel)]="password"
+          ngModel
+        />
+      </mat-form-field>
+      <!-- <span *ngIf="password.touched && password.invalid" style="color: red;text-align: center;">Password cannot be empty</span> -->
+      <button [disabled]="UserDetails.invalid" mat-button color="primary">
+        Login
+      </button>
+    </form>
+  </mat-card>
+</div>
