@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: "16.x"
 
+      - name: Install angular dependencies
+        run: npm install -g @angular/cli
+
       - name: Install project dependencies
         run: npm install
 
