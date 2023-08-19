@@ -1,9 +1,8 @@
 name: Build & Deploy to Firebase
-
 on:
   push:
     branches:
-      - dev
+      - bharath
 
 jobs:
   Build-Deploy:
@@ -23,9 +22,10 @@ jobs:
       - name: Build Angular application
         run: npx ng build
 
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@v12.4.0
+      - name: Deploying application to Amazon S3
+        uses: dvelasquez/deploy-s3-action@main
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
