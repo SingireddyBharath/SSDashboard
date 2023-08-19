@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  Build-Deploy:
+  Build-Deploy-to-Firebase:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

@@ -5,7 +5,7 @@ on:
       - dev
 
 jobs:
-  Build-Deploy:
+  Build-Deploy-to-S3:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
