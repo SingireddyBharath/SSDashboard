@@ -2,7 +2,7 @@ name: Build & Deploy to S3
 on:
   push:
     branches:
-      - dev
+      - empty
 
 jobs:
   Build-Deploy-to-S3:
