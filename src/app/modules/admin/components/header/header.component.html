@@ -1,0 +1,19 @@
+<div ng-controller="HeaderController as headerCtrl" class="header">
+  <h1>SS Dashboard</h1>
+  <div class="user-icon">
+    <button (click)="showCustomWindow = true">
+      Logout
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+  <div *ngIf="showCustomWindow" class="custom-window-background">
+    <div class="custom-window">
+      <h2>Are you sure you want to log out?</h2>
+      <p>Click "Yes" to proceed with logout or "No" to cancel.</p>
+      <button (click)="logOut()" class="logout-button">Yes</button>
+      <button (click)="showCustomWindow = false" class="cancel-button">
+        No
+      </button>
+    </div>
+  </div>
+</div>

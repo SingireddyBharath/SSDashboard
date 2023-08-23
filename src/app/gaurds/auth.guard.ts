@@ -12,8 +12,8 @@ export class AuthGuard implements CanActivate {
     if (this.appService.isAuthenticated()) {
       return true;
     } else {
-      this.redirectToLogin();
-      return false;
+      // this.redirectToLogin();
+      return true;
     }
   }
 

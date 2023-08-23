@@ -1,1 +1,135 @@
-<h1>Welcome to home Page</h1>
+<app-header></app-header>
+
+<!-- Main page list of indexs -->
+<ng-container *ngIf="mainPage">
+  <button class="createIndexBtn" (click)="createIndex()">
+    Create New Index
+  </button>
+  <div class="pimContainer">
+    <ng-container *ngFor="let item of indexNames">
+      <div class="pim-index-div" (click)="editIndex(item)">
+        <h2>{{ item }}</h2>
+        <span class="key">Account Name : </span
+        ><span class="value">{{
+          trimAccountName(availableIndexes[item].accountName)
+        }}</span
+        ><br />
+        <span class="key">Environment : </span
+        ><span class="value">{{ availableIndexes[item].env }}</span
+        ><br />
+        <span class="key">TopK : </span
+        ><span class="value">{{ availableIndexes[item].topK || "NA" }}</span>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+
+<!-- index editing page -->
+<ng-container *ngIf="editPage">
+  <button class="backToHome-btn" (click)="backToHome()">
+    <i class="fas fa-chevron-left" style="margin-right: 5px"></i>Go Back
+  </button>
+  <h2>{{ currentEditPage }}</h2>
+</ng-container>
+
+<!-- create page  -->
+<ng-container *ngIf="createPage">
+  <button class="backToHome-btn" (click)="backToHome()">
+    <i class="fas fa-chevron-left" style="margin-right: 5px"></i>Go Back
+  </button>
+  <div class="container">
+    <h1>JSON Data Capture</h1>
+    <form (ngSubmit)="onSubmit()">      
+      <div class="section">
+        <label for="indexName">Index Name:</label>
+        <input type="text" id="indexName" name="indexName" [(ngModel)]="jsonData.indexName" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label for="apiKey">API Key:</label>
+        <input type="text" id="apiKey" name="apiKey" [(ngModel)]="jsonData.properties.apiKey" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label for="env">Environment:</label>
+        <input type="text" id="env" name="env" [(ngModel)]="jsonData.properties.env" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label for="accountName">Account Name:</label>
+        <input type="text" id="accountName" name="accountName" [(ngModel)]="jsonData.properties.accountName" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label for="fetchFromPIM">Fetch from PIM:</label>
+        <input type="checkbox" id="fetchFromPIM" name="fetchFromPIM" [(ngModel)]="jsonData.properties.fetchFromPIM" /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label>LLM Config:</label><br />
+        <div>
+          <label for="embeddingModel">Embedding Model:</label>
+          <input type="text" id="embeddingModel" name="embeddingModel" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.model" required /><br />
+      
+          <label for="embeddingIsAzureOpenAI">Embedding Is Azure OpenAI:</label>
+          <input type="checkbox" id="embeddingIsAzureOpenAI" name="embeddingIsAzureOpenAI" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.isAzureOpenAI" /><br />
+      
+          <label for="embeddingApiVersion">Embedding API Version:</label>
+          <input type="text" id="embeddingApiVersion" name="embeddingApiVersion" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel['api-version']" required /><br /><br />
+        </div>
+      
+        <div>
+          <label for="consolidatedModel">Consolidated Query Model:</label>
+          <input type="text" id="consolidatedModel" name="consolidatedModel" [(ngModel)]="jsonData.properties.llmConfig.consolidatedQueryModel.model" required /><br />
+      
+          <label for="consolidatedIsAzureOpenAI">Consolidated Is Azure OpenAI:</label>
+          <input type="checkbox" id="consolidatedIsAzureOpenAI" name="consolidatedIsAzureOpenAI" [(ngModel)]="jsonData.properties.llmConfig.consolidatedQueryModel.isAzureOpenAI" /><br />
+      
+          <label for="consolidatedApiVersion">Consolidated API Version:</label>
+          <input type="text" id="consolidatedApiVersion" name="consolidatedApiVersion" [(ngModel)]="jsonData.properties.llmConfig.consolidatedQueryModel['api-version']" required /><br />
+      
+          <label for="consolidatedTemperature">Consolidated Temperature:</label>
+          <input type="number" id="consolidatedTemperature" name="consolidatedTemperature" [(ngModel)]="jsonData.properties.llmConfig.consolidatedQueryModel.temperature" step="0.01" required /><br /><br />
+        </div>
+      
+        <div>
+          <label for="presentationModel">Presentation Model:</label>
+          <input type="text" id="presentationModel" name="presentationModel" [(ngModel)]="jsonData.properties.llmConfig.presentationModel.model" required /><br />
+      
+          <label for="presentationIsAzureOpenAI">Presentation Is Azure OpenAI:</label>
+          <input type="checkbox" id="presentationIsAzureOpenAI" name="presentationIsAzureOpenAI" [(ngModel)]="jsonData.properties.llmConfig.presentationModel.isAzureOpenAI" /><br />
+      
+          <label for="presentationApiVersion">Presentation API Version:</label>
+          <input type="text" id="presentationApiVersion" name="presentationApiVersion" [(ngModel)]="jsonData.properties.llmConfig.presentationModel['api-version']" required /><br />
+      
+          <label for="presentationTemperature">Presentation Temperature:</label>
+          <input type="number" id="presentationTemperature" name="presentationTemperature" [(ngModel)]="jsonData.properties.llmConfig.presentationModel.temperature" step="0.01" required /><br /><br />
+        </div>
+      </div>
+      
+      <div class="section">
+        <label for="topK">Top K:</label>
+        <input type="number" id="topK" name="topK" [(ngModel)]="jsonData.properties.topK" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label>Namespaces:</label><br />
+        <input type="text" *ngFor="let namespace of jsonData.properties.namespaces; let i = index" [(ngModel)]="jsonData.properties.namespaces[i]" required /><br /><br />
+      </div>
+      
+      <div class="section">
+        <label>CX_INIT_PROMPT:</label><br />
+        <textarea id="CX_INIT_PROMPT" name="CX_INIT_PROMPT" rows="4" [(ngModel)]="jsonData.prompts.CX_INIT_PROMPT" required></textarea><br /><br />
+      </div>
+      
+      <div class="section">
+        <label>CONSOLIDATE_QUERY_PROMPT:</label><br />
+        <textarea id="CONSOLIDATE_QUERY_PROMPT" name="CONSOLIDATE_QUERY_PROMPT" rows="4" [(ngModel)]="jsonData.prompts.CONSOLIDATE_QUERY_PROMPT" required></textarea><br /><br />
+      </div>
+      
+      <button type="button" class="update-all-button">Update All</button>
+      <button type="submit">Submit</button>
+      
+    </form>
+  </div>
+</ng-container>
