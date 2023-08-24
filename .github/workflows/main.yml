@@ -27,7 +27,7 @@ jobs:
         run: npm install tslib --force
 
       - name: Build Angular application
-        run: npm ng build
+        run: npx ng build
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v12.4.0
