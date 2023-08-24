@@ -22,7 +22,8 @@ jobs:
 
       - name: Install project dependencies
         run: npm install --force
-
+      - name: install tslib dependencies
+        run: npx install tslib
       - name: Build Angular application
         run: npx ng build
 
