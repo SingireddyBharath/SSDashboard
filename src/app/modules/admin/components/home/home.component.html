@@ -64,20 +64,20 @@
         <label for="fetchFromPIM">Fetch from PIM:</label>
         <input type="checkbox" id="fetchFromPIM" name="fetchFromPIM" [(ngModel)]="jsonData.properties.fetchFromPIM" /><br /><br />
       </div>
-      
-      <div class="section">
-        <label>LLM Config:</label><br />
-        <div>
-          <label for="embeddingModel">Embedding Model:</label>
-          <input type="text" id="embeddingModel" name="embeddingModel" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.model" required /><br />
-      
-          <label for="embeddingIsAzureOpenAI">Embedding Is Azure OpenAI:</label>
-          <input type="checkbox" id="embeddingIsAzureOpenAI" name="embeddingIsAzureOpenAI" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.isAzureOpenAI" /><br />
-      
-          <label for="embeddingApiVersion">Embedding API Version:</label>
-          <input type="text" id="embeddingApiVersion" name="embeddingApiVersion" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel['api-version']" required /><br /><br />
-        </div>
-      
+      <div>
+     <div class="dropdown" id="dropdown">
+       <label>LLM Config:</label><br>
+       <div class="dropdown-content">
+         <label for="embeddingModel">Embedding Model:</label>
+         <input type="text" id="embeddingModel" name="embeddingModel" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.model" required /><br>
+     
+         <label for="embeddingIsAzureOpenAI">Embedding Is Azure OpenAI:</label>
+         <input type="checkbox" id="embeddingIsAzureOpenAI" name="embeddingIsAzureOpenAI" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel.isAzureOpenAI" /><br>
+     
+         <label for="embeddingApiVersion">Embedding API Version:</label>
+         <input type="text" id="embeddingApiVersion" name="embeddingApiVersion" [(ngModel)]="jsonData.properties.llmConfig.embeddingModel['api-version']" required /><br><br>
+       </div>
+     </div>      
         <div>
           <label for="consolidatedModel">Consolidated Query Model:</label>
           <input type="text" id="consolidatedModel" name="consolidatedModel" [(ngModel)]="jsonData.properties.llmConfig.consolidatedQueryModel.model" required /><br />

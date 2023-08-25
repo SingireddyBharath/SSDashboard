@@ -68,8 +68,6 @@ export class HomeComponent implements OnInit {
       this.availableIndexes = this.data[0].availableIndexes;
 
       this.indexNames = Object.keys(this.data[0].availableIndexes);
-      this.indexNames.push('praveen-index')
-      this.indexNames.push('praveen-index')
 
     } catch (error) {
       console.error(error);
