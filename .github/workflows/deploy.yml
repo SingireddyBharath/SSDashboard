@@ -1,0 +1,17 @@
+name: Deploy SSDashboard App to Firebase
+on:
+  push:
+    branches:
+      - bharath
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@v12.4.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

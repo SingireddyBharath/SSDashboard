@@ -6,8 +6,8 @@ import { AuthGuard } from './gaurds/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/admin', pathMatch: 'full' },
-  { 
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then((module) => module.AdminModule),
     canActivate: [AuthGuard]
