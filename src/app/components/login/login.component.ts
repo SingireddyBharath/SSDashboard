@@ -18,7 +18,7 @@ export class LoginComponent {
         this.router.navigate(['/admin']);
       }
       else {
-        this.loginFailed = true;
+        this.loginFailed = false;
       }
     })
   }
