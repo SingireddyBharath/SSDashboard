@@ -78,12 +78,19 @@ export class HomeComponent implements OnInit {
   }
 
   async confirmUpload() {
-    console.log(this.file);
+    console.log(this.file, typeof this.file);
+    const indexName = this.file["indexName"];
+    const postData = this.data[0];
+    postData["indexes"][indexName] = this.file["properties"]
+    postData["prompts"][indexName] = this.file["prompts"]
     try {
-      const res: any = this.appService.createIndex(this.file).toPromise();
+      if (JSON.stringify(this.file) !== JSON.stringify(this.sampleJson)) {
+        const res: any = this.appService.createIndex(postData).toPromise();
+      }
+      console.log(postData);
+
       this.showSuccessWindow = true;
       this.showCelebration = true;
-
     }
     catch {
       console.log("error in creating the index");
@@ -99,13 +106,9 @@ export class HomeComponent implements OnInit {
     try {
       this.data = await this.appService.getData().toPromise();
       console.log(this.data);
-      this.availableIndexes = this.data[0].availableIndexes;
-<<<<<<< HEAD
-      this.indexNames = Object.keys(this.data[0].availableIndexes);
-=======
-      this.availablePrompts = this.data[0].availablePrompts;
+      this.availableIndexes = this.data[0].indexes;
+      this.availablePrompts = this.data[0].prompts;
       this.indexNames = Object.keys(this.availableIndexes);
->>>>>>> cb3c5ffd2753698a512dde33900d7b70babea45f
     } catch (error) {
       console.error(error);
     }

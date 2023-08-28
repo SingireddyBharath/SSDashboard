@@ -24,7 +24,7 @@ export class AppService {
     return this.http.get<any>('https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData');
   }
   createIndex(indexData: any) {
-    return this.http.post<any>("https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData", indexData);
+    return this.http.put<any>("https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData/0", indexData);
   }
 }
 
