@@ -8,12 +8,11 @@ import { Injectable } from '@angular/core';
 export class AuthGuard implements CanActivate {
   constructor(private appService: AppService, private router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(): any {
     if (this.appService.isAuthenticated()) {
       return true;
     } else {
       this.redirectToLogin();
-      return false;
     }
   }
 
