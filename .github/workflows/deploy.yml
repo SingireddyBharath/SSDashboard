@@ -2,7 +2,7 @@ name: Deploy SSDashboard App to Firebase
 on:
   push:
     branches:
-      - dev
+      - bharath
 
 jobs:
   deploy:
