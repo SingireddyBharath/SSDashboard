@@ -1,6 +1,6 @@
 .pimContainer {
-    position: relative;
-      /* Add relative positioning to the container */
+  position: relative;
+  /* Add relative positioning to the container */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -9,8 +9,8 @@
 }
 
 .pim-index-div {
-    position: relative;
-      /* Add relative positioning to each div */
+  position: relative;
+  /* Add relative positioning to each div */
   /* flex: 0.2 1 calc(25% - 20px) */
   flex-basis: calc(25% - 10px);
   /* Adjust the percentage and spacing as needed */
@@ -21,7 +21,7 @@
   /* Use relative units for margin */
   border: 0.5px solid #3a3939;
   border-radius: 10px;
-  background-color: rgb(242, 234, 212);
+  background-color: #dbefcc;
 }
 
 .upload-img {
@@ -36,7 +36,7 @@
   /* Position it at the top */
   right: 5px;
   /* Position it at the right */
-  background-color: rgb(242, 234, 212);
+  background-color: #dbefcc;
   cursor: pointer;
   border: none;
 }

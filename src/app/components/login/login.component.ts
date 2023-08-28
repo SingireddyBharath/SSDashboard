@@ -12,7 +12,7 @@ export class LoginComponent {
   password: any = ''
   loginFailed: boolean = false
   Login(userDetails: any) {
-    this.appService.validateUser().subscribe((response) => {
+    this.appService.validateUser().subscribe((response:any) => {
       if (response[0].userName === userDetails.userName && response[0].password === userDetails.password) {
         this.appService.setAuth(true);
         this.router.navigate(['/admin']);

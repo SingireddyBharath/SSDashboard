@@ -8,7 +8,9 @@
   <div class="pimContainer">
     <ng-container *ngFor="let item of indexNames">
       <div class="pim-index-div">
-     <button class="upload-btn" (click)="exportIndex(item)" ><img src="assets/upload.png" class="upload-img" ></button>
+        <button class="upload-btn" (click)="exportIndex(item)">
+          <img src="assets/upload.png" class="upload-img" />
+        </button>
         <h2>{{ item }}</h2>
         <span class="key">Account Name : </span
         ><span class="value">{{
@@ -32,10 +34,6 @@
   </button>
   <h2>{{ currentEditPage }}</h2>
 </ng-container>
-
-
-
-
 
 <ng-container *ngIf="createPage">
   <button class="backToHome-btn" (click)="backToHome()">
