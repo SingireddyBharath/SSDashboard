@@ -1,22 +1,18 @@
-import { CanActivate, Router } from '@angular/router';
-import { AppService } from 'src/app/API-services/app.service'
-import { Injectable } from '@angular/core';
+import { CanActivate, Router } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { SharedService } from "../shared-services/shared.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-  constructor(private appService: AppService, private router: Router) {}
+  constructor(private sharedService: SharedService, private router: Router) { }
 
   canActivate(): any {
-    if (this.appService.isAuthenticated()) {
+    if (this.sharedService.isloggedIn) {
       return true;
     } else {
-      this.redirectToLogin();
+      this.router.navigate(["/login"]);
     }
-  }
-
-  redirectToLogin(): void {
-    this.router.navigate(['/login']);
   }
 }

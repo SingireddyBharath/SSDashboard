@@ -16,6 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppService } from 'src/app/API-services/app.service'
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
+import { AuthService } from './auth-services/auth.service';
+import { SharedService } from './shared-services/shared.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,7 @@ import { HomeComponent } from './home/home.component';
     MatToolbarModule,
     ReactiveFormsModule
   ],
-  providers: [AppService],
+  providers: [AppService, AuthService, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

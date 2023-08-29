@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from 'src/app/API-services/app.service';
-
+import { SharedService } from '../shared-services/shared.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,10 +8,10 @@ import { AppService } from 'src/app/API-services/app.service';
 })
 export class HeaderComponent {
   showCustomWindow = false;
-  constructor(private router: Router, private appService: AppService) { }
+  constructor(private router: Router, private sharedService: SharedService) { }
   logOut(): void {
     this.showCustomWindow = true;
-    this.appService.setAuth(false);
+    this.sharedService.isloggedIn = false;
     this.router.navigate(["/login"]);
   }
 }

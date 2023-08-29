@@ -11,6 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular-devkit/architect": "^0.1602.0",
+    "@angular-devkit/schematics": "^16.2.0",
     "@angular/animations": "^16.2.1",
     "@angular/cdk": "~16.2.0",
     "@angular/common": "^16.2.0",
@@ -23,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
     "@fortawesome/fontawesome-free": "^6.4.2",
+    "@schematics/angular": "^16.2.0",
     "ajv": "^8.12.0",
     "json-parse-even-better-errors": "^3.0.0",
     "rxjs": "~7.8.0",
