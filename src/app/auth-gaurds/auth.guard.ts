@@ -1,5 +1,5 @@
 import { CanActivate, Router } from '@angular/router';
-import { AppService } from '../services/app.service';
+import { AppService } from 'src/app/API-services/app.service'
 import { Injectable } from '@angular/core';
 
 @Injectable({
