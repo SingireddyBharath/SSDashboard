@@ -1,0 +1,379 @@
+<div class="create-index-container">
+    <div class="header">
+        <div class="left-header">
+            <span class="heading-text">Index Configuration</span><br>
+            <span class="subtext">This wizards helps you to configure and update an existing pinecone index</span>
+        </div>
+    </div>
+
+    <div class="stepper-container">
+        <mat-stepper [linear]="isLinear" #stepper animationDuration="0">
+            <mat-step [stepControl]="pineconeCredentials">
+                <ng-template matStepLabel>Account Data</ng-template>
+                <form [formGroup]="pineconeCredentials">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Pinecone UserName</mat-label>
+                        <input matInput formControlName="userName" required>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline" class="apiKey-input">
+                        <mat-label>Pinecone API Key</mat-label>
+                        <input matInput formControlName="apiKey" required>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="instance-input">
+                        <mat-label>Pinecone Instance Type</mat-label>
+                        <mat-select formControlName="instanceType" required>
+                            <mat-option *ngFor="let food of foods" [value]="food.value">{{food.value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                        Enable fetching Meta Data from PIM
+                    </mat-slide-toggle>
+
+                    <div class="button-container">
+                        <button matStepperNext class="next-btn">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+
+
+            <mat-step>
+                <ng-template matStepLabel>LLM Specification</ng-template>
+                <div class="llmConfig-container">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Embedding
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Embedding Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Consolidation
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Consolidation Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Fine Tuning
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Fine Tuning Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Follow up
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Follow up Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Follow up Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Follow up Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Presentation
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Presentation Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Fallback
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    Fallback Model Configuration
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <div class="embedding-container">
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-form-field class="embedding-name-input" appearance="outline">
+                                    <mat-label>Embedding Model Name</mat-label>
+                                    <mat-select required>
+                                        <mat-option *ngFor="let food of foods" [value]="food.value">
+                                            {{food.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <br>
+                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                                    Enable fetching Meta Data from PIM
+                                </mat-slide-toggle>
+                            </div>
+
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+                <div class="button-container">
+                    <button class="next-btn" matStepperNext>Next</button><br>
+                    <button class="back-btn" matStepperPrevious>Back</button>
+                </div>
+            </mat-step>
+
+            <mat-step [stepControl]="searchPreferenceForm">
+                <ng-template matStepLabel>Search Preferences</ng-template>
+                <form [formGroup]="searchPreferenceForm">
+                    <mat-card class="topK-container">
+                        <mat-card-content>
+                            <div class="example-label-container">
+                                <div class="example-name-label">Top K Count</div>
+                                <div class="example-value-label">{{slider.value}}</div>
+                            </div>
+                            <div class="topK-slider">
+                                <span>0</span>
+                                <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    [(ngModel)]="value">
+                                    <input matSliderThumb #slider>
+                                </mat-slider>
+                                <span>10</span>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                    <div class="ignoreKeys-card">
+                        <div class="ignoreKeys-header">
+                            <h3>Vector Search Ignorable Keys</h3>
+                        </div>
+                        <mat-form-field class="example-chip-list">
+                            <mat-label>Ignorable Keys</mat-label>
+                            <mat-chip-grid #chipGrid aria-label="Enter keys">
+                                <mat-chip-row *ngFor="let keys of ignorableKeys" (removed)="remove(keys,ignorableKeys)"
+                                    [editable]="true" (edited)="edit(keys, $event,ignorableKeys)"
+                                    [aria-description]="'press enter to edit ' + keys.name">
+                                    {{keys.name}}
+                                    <button matChipRemove [attr.aria-label]="'remove ' + keys.name">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip-row>
+                                <input placeholder="New Key" [matChipInputFor]="chipGrid"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event,ignorableKeys)" />
+                            </mat-chip-grid>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="namespace-card">
+                        <div class="namespace-header">
+                            <h3>Namespaces</h3>
+                        </div>
+                        <mat-form-field class="example-chip-list">
+                            <mat-label>Namespaces</mat-label>
+                            <mat-chip-grid #chipGrid1 aria-label="Enter keys">
+                                <mat-chip-row *ngFor="let item of namespaces" (removed)="remove(item, namespaces)"
+                                    [editable]="true" (edited)="edit(item, $event, namespaces)"
+                                    [aria-description]="'press enter to edit ' + item.name">
+                                    {{item.name}}
+                                    <button matChipRemove [attr.aria-label]="'remove ' + item.name">
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                </mat-chip-row>
+                                <input placeholder="New namespace" [matChipInputFor]="chipGrid1"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event, namespaces)" />
+                            </mat-chip-grid>
+                        </mat-form-field>
+                    </div>
+                    <div class="button-container">
+                        <button class="next-btn" matStepperNext>Next</button><br>
+                        <button class="back-btn" matStepperPrevious>Back</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step [stepControl]="promptsForm">
+                <ng-template matStepLabel>Prompting</ng-template>
+
+                <div class="add-prompt-container" *ngIf="availableOptions.length > 0">
+                    <span class="add-prompt-text">Add Prompt</span>
+                    <button class="add-prompt-btn" mat-icon-button [matMenuTriggerFor]="dropdownMenu"
+                        aria-label="Expand dropdown">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <mat-menu #dropdownMenu="matMenu" class="custom-dropdown">
+                    <ng-container *ngFor="let option of availableOptions">
+                        <button mat-menu-item (click)="onOptionSelected(option)">
+                            {{ option }}
+                        </button>
+                    </ng-container>
+                </mat-menu>
+
+                <div class="selected-values-container">
+                    <div class="selected-value" *ngFor="let value of selectedValues">{{ value }} <button
+                            (click)="removeValue(value)">x</button></div>
+                </div>
+
+                <div class="button-container">
+                    <button class="next-btn" matStepperNext>Next</button><br>
+                    <button class="back-btn" matStepperPrevious>Back</button>
+                </div>
+            </mat-step>
+
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div class="button-container">
+                    <button class="back-btn" matStepperPrevious>Back</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>

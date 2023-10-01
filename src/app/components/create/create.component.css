@@ -1,0 +1,265 @@
+.header {
+    margin-top: 20px;
+}
+
+.heading-text {
+    color: #BFBFBF;
+    font-family: Sen;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 40.5px;
+    letter-spacing: 0.25px;
+    margin-left: 50px;
+}
+
+.subtext {
+    margin-left: 50px;
+    font-size: 11px;
+}
+
+.button-container {
+    position: absolute;
+    right: 80px;
+    top: -105px;
+}
+
+.next-btn {
+    border: none;
+    width: 70px;
+    height: 28px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(118, 198, 118);
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.back-btn {
+    border: none;
+    width: 70px;
+    height: 28px;
+    border-radius: 5px;
+    color: black;
+    background-color: rgb(170, 175, 170);
+    cursor: pointer;
+}
+
+.stepper-container {
+    padding: 0px 20px 0px 20px;
+    position: relative;
+    margin-top: 50px;
+    font-size: 12px;
+    /* background-color: green; */
+}
+
+mat-form-field {
+    width: 400px;
+    margin-top: 5px;
+
+}
+
+mat-label {
+    font-size: 12px;
+}
+
+.mat-step-text-label {
+    font-size: 10px;
+}
+
+form {
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    margin-left: 350px;
+    padding-left: 70px;
+    padding-right: 50px;
+    margin-top: 10px;
+}
+
+.apiKey-input {
+
+    margin-bottom: 50px;
+    height: 10px;
+    width: 400px;
+    font-size: 12px;
+}
+
+.instance-input {
+    margin-top: 20px;
+}
+
+.mdc-switch:enabled .mdc-switch__track::after {
+    background-color: green;
+}
+
+.custom-slide-toggle {
+    margin-top: 20px;
+    margin-left: 70px;
+}
+
+.llmConfig-container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.embedding-name-input {
+    width: 350px;
+    margin-left: 150px;
+}
+
+.embedding-container {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: 48px !important;
+}
+
+::ng-deep .example-chip-list .mat-mdc-text-field-wrapper {
+    height: auto !important;
+}
+
+.example-chip-list {
+    width: 600px;
+    height: auto;
+    font-size: 12px;
+}
+
+.ignoreKeys-card {
+    margin: 10px;
+    padding: 5px;
+    width: 600px;
+    height: auto;
+    margin-left: -130px;
+}
+
+.namespace-card {
+    margin-left: -130px;
+}
+
+::ng-deep .example-chip-list .mat-mdc-text-field-wrapper {
+    padding: 0 6px;
+}
+
+/* input border-bottom color */
+::ng-deep .example-chip-list .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+    border-bottom-color: green;
+}
+
+/* floating label of input  */
+::ng-deep .example-chip-list .mdc-text-field--filled .mdc-floating-label {
+    color: rgb(14, 14, 14) !important;
+    font-size: 13px;
+    padding: 5px;
+}
+
+::ng-deep .example-chip-list .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+    font-size: 6px !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper .mdc-text-field .mdc-text-field--filled {
+    padding: 5px;
+    background-color: green;
+}
+
+/* chip left side */
+::ng-deep .mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--primary {
+    background-color: #a8d384;
+    border-radius: 25px 0 0 25px;
+}
+
+/* chip font size */
+::ng-deep .example-chip-list .mat-mdc-chip.mdc-evolution-chip--with-trailing-action .mat-mdc-chip-action-label {
+    font-size: 11px;
+}
+
+/* chip right side */
+::ng-deep .mdc-evolution-chip__cell--trailing {
+    background-color: #a8d384;
+    border-radius: 0 25px 25px 0;
+}
+
+/* slider color */
+::ng-deep .mat-mdc-slider.mat-mdc-slider-with-animation .mdc-slider__track--active_fill {
+    border-color: rgb(92, 194, 92);
+}
+
+::ng-deep .mat-mdc-slider .mdc-slider__thumb-knob {
+    border-color: rgb(87, 160, 87) !important;
+}
+
+::ng-deep .mdc-switch__track::after {
+    background: #88AF67 !important;
+}
+
+::ng-deep .mdc-switch__icons .ng-star-inserted {
+    background-color: #88AF67 !important;
+}
+
+::ng-deep :root {
+    --mdc-switch-selected-handle-color: #88AF67 !important;
+}
+
+::ng-deep .mat-mdc-slide-toggle {
+    --mdc-switch-selected-handle-color: #88AF67 !important;
+}
+
+
+.example-margin {
+    width: 300px;
+}
+
+.topK-slider {
+    margin-top: 20px;
+    display: flex;
+}
+
+.example-margin {
+    margin-top: -13px;
+    margin-left: 19px;
+    margin-right: 10px;
+}
+
+.example-name-label {
+    width: 140px;
+    float: left;
+    font-size: 14px;
+}
+
+.example-value-label {
+    width: 50px;
+    float: right;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 190px;
+}
+
+.example-label-container {
+    display: flex;
+    margin: 10px;
+    margin-bottom: 30px;
+}
+
+/* prompt step */
+/* .add-prompt-btn {
+    margin-left: 60%;
+} */
+
+.custom-dropdown {
+    width: 500px;
+    /* Adjust the width as needed */
+}
+
+.add-prompt-container {
+    display: flex;
+    align-items: center;
+    margin-left: 70%;
+}
+
+.add-prompt-text {
+    margin-right: 5px;
+}

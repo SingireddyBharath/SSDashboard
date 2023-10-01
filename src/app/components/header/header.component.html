@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <img class="kore_logo" src="assets/Kore.ai_logo-latest.svg" alt="kore">
+  <span class="example-spacer"></span>
+  <img src="assets/RetailAssist-Logo.svg" class="retail_logo" alt="RetailAssist">
+
+  <button *ngIf="isloggedIn" mat-icon-button [matMenuTriggerFor]="menu" class="example-icon"
+    aria-label="Example icon-button with share icon">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu class="logout-menu" #menu="matMenu">
+    <button class="logout-btn" mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+
+</mat-toolbar>

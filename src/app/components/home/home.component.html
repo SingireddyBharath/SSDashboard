@@ -1,0 +1,51 @@
+<div class="homePage">
+  <div class="home-header">
+    <div class="username_container">
+      <div class="username">Hi, {{userName}}</div>
+      <div class="ack-message">All search indices linked to your
+        account are listed below</div>
+    </div>
+    <div class="btn_container">
+      <button class="create-index-btn" routerLink="/create">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        CREATE AN INDEX
+      </button>
+      <br>
+      <button class="more-info-btn"><img class="bookmark-icon" width="24" height="24" src="assets/icons8-bookmark.svg"
+          alt="bookmark-ribbon--v1" />
+        HOW THIS WORKS
+      </button>
+    </div>
+  </div>
+
+
+  <mat-grid-list cols="3" rowHeight="2.5:1" class="responsive-grid">
+    <mat-grid-tile *ngFor="let item of indexNames">
+      <div class="grid-title">
+        <div class="index-name">
+          <h2>{{ item }}</h2>
+          <!-- <mat-slide-toggle color="warn" class="custom-slide-toggle"></mat-slide-toggle> -->
+        </div>
+        <span class="key">Account Name : </span>
+        <span class="value">{{trimAccountName(availableIndexes[item].accountName)}}</span><br />
+
+        <span class="key">Environment : </span><span class="value">{{ availableIndexes[item].env }}</span><br />
+        <div class="index-footer">
+          <div class="left-footer">
+            <span class="key">TopK : </span>
+            <span class="value">{{ availableIndexes[item].topK || "NA" }}</span>
+          </div>
+
+          <!-- <img [id]="isDisabled ? 'disabled-image' : null" class="edit-img" src="assets/mat-btn.png" alt="edit"
+          (click)="isDisabled ? null : editIndex(item)" /> -->
+
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="refresh-container">
+    <button class="refresh-btn" (click)="refreshData()"><img class="refresh-img"
+        src="assets/icons8-refresh.svg">REFRESH</button>
+  </div>
+</div>

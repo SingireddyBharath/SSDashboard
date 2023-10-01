@@ -1,0 +1,23 @@
+<div class="component-container">
+  <img class="retail-logo" src="assets/RetailAssist-Logo.svg" alt="RetailAssist">
+  <img class="vector-img" src="assets/Vector.png" alt="Vector">
+  <div class="quote">your products, <br> your preferences!</div>
+  <div class="loginForm">
+    <button class="signIn-label">SIGN IN</button>
+    <form #UserDetails="ngForm" (ngSubmit)="Login(UserDetails.value)" class="form" fxLayout="column">
+      <input class="email" type="text" matInput name="userName" required [(ngModel)]="userName" placeholder="username">
+      <div class="input-wrapper">
+        <input class="password" [type]="showPassword ? 'text' : 'password'" required name="password"
+          [(ngModel)]="password" placeholder="Password">
+        <button type="button" mat-icon-button class="eye-icon" (click)="togglePasswordVisibility()">
+          <mat-icon class="mat-icon">{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </div>
+      <div class="error-message" [class.hide]="!isCredentialsWrong">Incorrect username or password.</div>
+      <button class="login-btn"
+        [disabled]="UserDetails.invalid || userName.length === 0 || password.length === 0">Login</button>
+    </form>
+  </div>
+
+
+</div>
