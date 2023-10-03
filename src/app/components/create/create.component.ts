@@ -124,19 +124,26 @@ export class CreateComponent implements OnInit {
     'Option 3',
   ];
   selectedValues: string[] = [];
+  selectedOptions: { option: string, prompt: string }[] = [];
 
-  onOptionSelected(selectedOption: string) {
-    if (selectedOption) {
-      this.selectedValues.push(selectedOption);
-      this.availableOptions = this.availableOptions.filter(option => option !== selectedOption);
-    }
+  onOptionSelected(option: string) {
+    this.selectedOptions.push({ option, prompt: '' });
+    this.availableOptions = this.availableOptions.filter(op => op !== option);
   }
 
-  removeValue(value: string) {
-    this.selectedValues = this.selectedValues.filter(val => val !== value);
+  removeExpansionPanel(value: string) {
+    this.selectedOptions = this.selectedOptions.filter(op => op.option !== value)
     this.availableOptions.push(value);
   }
+  updatePrompt(selectedOption: any) {
+    // Implement the logic you need for updating the prompt
+    console.log(`Updating prompt for ${selectedOption.option}: ${selectedOption.prompt}`);
+    console.log(this.selectedOptions);
+  }
 
-
+  clearPrompt(selectedOption: any) {
+    // Clear the prompt for the selected option
+    selectedOption.prompt = '';
+  }
 
 }

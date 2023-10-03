@@ -348,6 +348,7 @@
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
+
                 <mat-menu #dropdownMenu="matMenu" class="custom-dropdown">
                     <ng-container *ngFor="let option of availableOptions">
                         <button mat-menu-item (click)="onOptionSelected(option)">
@@ -356,10 +357,32 @@
                     </ng-container>
                 </mat-menu>
 
-                <div class="selected-values-container">
-                    <div class="selected-value" *ngFor="let value of selectedValues">{{ value }} <button
-                            (click)="removeValue(value)">x</button></div>
-                </div>
+                <ng-container *ngFor="let selectedOption of selectedOptions; let i = index">
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>{{ selectedOption.option }}</mat-panel-title>
+                            <button mat-icon-button color="warn" (click)="removeExpansionPanel(selectedOption.option)"
+                                aria-label="Remove panel">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-expansion-panel-header>
+
+                        <!-- Add Update and Clear buttons inside the content area -->
+                        <mat-form-field>
+                            <textarea matInput placeholder="Enter prompt"
+                                [(ngModel)]="selectedOption.prompt"></textarea>
+                        </mat-form-field>
+
+                        <mat-action-row>
+                            <button mat-button color="primary" (click)="updatePrompt(selectedOption)">Update</button>
+                            <button mat-button (click)="clearPrompt(selectedOption)">Clear</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </ng-container>
+
+
+
+
 
                 <div class="button-container">
                     <button class="next-btn" matStepperNext>Next</button><br>
