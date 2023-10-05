@@ -11,9 +11,8 @@ export class HomeComponent implements OnInit {
   data!: any;
   indexNames!: string[];
   availableIndexes: any;
-  availablePrompts: any;
   userName: any;
-  isDisabled:boolean = false
+  isDisabled: boolean = false
   constructor(private appService: AppService, private sharedService: SharedService) { }
 
   ngOnInit() {
@@ -24,8 +23,7 @@ export class HomeComponent implements OnInit {
     try {
       this.data = await this.appService.getData().toPromise();
       console.log(this.data);
-      this.availableIndexes = this.data[0].indexes;
-      this.availablePrompts = this.data[0].prompts;
+      this.availableIndexes = this.data.indexes;
       this.indexNames = Object.keys(this.availableIndexes);
     } catch (error) {
       console.error(error);

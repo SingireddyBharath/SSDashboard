@@ -8,9 +8,10 @@
 
     <div class="stepper-container">
         <mat-stepper [linear]="isLinear" #stepper animationDuration="0">
+
             <mat-step [stepControl]="pineconeCredentials">
                 <ng-template matStepLabel>Account Data</ng-template>
-                <form [formGroup]="pineconeCredentials">
+                <form class="pinecone-div" [formGroup]="pineconeCredentials">
                     <mat-form-field appearance="outline">
                         <mat-label>Pinecone UserName</mat-label>
                         <input matInput formControlName="userName" required>
@@ -38,7 +39,6 @@
                 </form>
             </mat-step>
 
-
             <mat-step>
                 <ng-template matStepLabel>LLM Specification</ng-template>
                 <div class="llmConfig-container">
@@ -62,14 +62,22 @@
                                     </mat-select>
                                 </mat-form-field>
                                 <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Pinecone UserName</mat-label>
+                                    <input matInput required>
                                 </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>API Key</mat-label>
+                                    <input matInput required>
+                                </mat-form-field>
+                                <br>
+                                <span class="slider-label">Temparature</span>                                  
+                                  <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks">
+                                    <input matSliderThumb>
+                                  </mat-slider>
+                               
+                                
                                 <br>
                                 <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
                                     Enable fetching Meta Data from PIM
@@ -159,6 +167,7 @@
                                     Follow up Model Configuration
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
+                            <mat-slide-toggle color="primary" class="followup-toggle">ENABLE</mat-slide-toggle>
 
                             <div class="embedding-container">
                                 <mat-form-field class="embedding-name-input" appearance="outline">
@@ -195,6 +204,7 @@
                                     Presentation Model Configuration
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
+                            <mat-slide-toggle color="primary" class="presentation-toggle">ENABLE</mat-slide-toggle>
 
                             <div class="embedding-container">
                                 <mat-form-field class="embedding-name-input" appearance="outline">
@@ -232,6 +242,9 @@
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
 
+                            <mat-slide-toggle color="primary" class="fallback-toggle">ENABLE</mat-slide-toggle>
+
+
                             <div class="embedding-container">
                                 <mat-form-field class="embedding-name-input" appearance="outline">
                                     <mat-label>Embedding Model Name</mat-label>
@@ -266,18 +279,18 @@
                 </div>
             </mat-step>
 
-            <mat-step [stepControl]="searchPreferenceForm">
+            <mat-step>
                 <ng-template matStepLabel>Search Preferences</ng-template>
-                <form [formGroup]="searchPreferenceForm">
+                <form class="search-pref-div" [formGroup]="searchPreferenceForm">
                     <mat-card class="topK-container">
-                        <mat-card-content>
+                        <mat-card-content class="topK-card">
                             <div class="example-label-container">
                                 <div class="example-name-label">Top K Count</div>
                                 <div class="example-value-label">{{slider.value}}</div>
                             </div>
                             <div class="topK-slider">
                                 <span>0</span>
-                                <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                <mat-slider class="example-margin-topk" [disabled]="disabled" [max]="max" [min]="min"
                                     [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                     [(ngModel)]="value">
                                     <input matSliderThumb #slider>
@@ -338,14 +351,15 @@
                 </form>
             </mat-step>
 
-            <mat-step [stepControl]="promptsForm">
+            <mat-step>
+
                 <ng-template matStepLabel>Prompting</ng-template>
 
                 <div class="add-prompt-container" *ngIf="availableOptions.length > 0">
                     <span class="add-prompt-text">Add Prompt</span>
                     <button class="add-prompt-btn" mat-icon-button [matMenuTriggerFor]="dropdownMenu"
                         aria-label="Expand dropdown">
-                        <mat-icon>add</mat-icon>
+                        <mat-icon>add_circle</mat-icon>
                     </button>
                 </div>
 
@@ -356,34 +370,35 @@
                         </button>
                     </ng-container>
                 </mat-menu>
+                <ng-container *ngIf="selectedOptions.length > 0;else elseBlockContent">
+                    <ng-container *ngFor="let selectedOption of selectedOptions; let i = index">
+                        <mat-expansion-panel class="prompt-expansion">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{ selectedOption.option }}</mat-panel-title>
+                                <button mat-icon-button color="warn"
+                                    (click)="removeExpansionPanel(selectedOption.option)" aria-label="Remove panel">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </mat-expansion-panel-header>
 
-                <ng-container *ngFor="let selectedOption of selectedOptions; let i = index">
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>{{ selectedOption.option }}</mat-panel-title>
-                            <button mat-icon-button color="warn" (click)="removeExpansionPanel(selectedOption.option)"
-                                aria-label="Remove panel">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </mat-expansion-panel-header>
-
-                        <!-- Add Update and Clear buttons inside the content area -->
-                        <mat-form-field>
-                            <textarea matInput placeholder="Enter prompt"
+                            <textarea class="custom-textarea" placeholder="Enter prompt"
                                 [(ngModel)]="selectedOption.prompt"></textarea>
-                        </mat-form-field>
-
-                        <mat-action-row>
-                            <button mat-button color="primary" (click)="updatePrompt(selectedOption)">Update</button>
-                            <button mat-button (click)="clearPrompt(selectedOption)">Clear</button>
-                        </mat-action-row>
-                    </mat-expansion-panel>
+                            <mat-action-row>
+                                <button mat-button color="primary"
+                                    (click)="updatePrompt(selectedOption)">Update</button>
+                                <button mat-button (click)="clearPrompt(selectedOption)">Clear</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+                    </ng-container>
                 </ng-container>
-
-
-
-
-
+                <ng-template #elseBlockContent>
+                    <div class="no-prompts-container">
+                        <img class="no-prompts-img" src="assets/no-prompts.png" alt="no-prompt">
+                        <h1 class="np-heading">No prompts added!</h1>
+                        <h5 class="np-description">Add a new prompt key-value prompt pair below. You can add as many as
+                            required.</h5>
+                    </div>
+                </ng-template>
                 <div class="button-container">
                     <button class="next-btn" matStepperNext>Next</button><br>
                     <button class="back-btn" matStepperPrevious>Back</button>
@@ -392,11 +407,37 @@
 
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
-                <p>You are now done.</p>
+                <div class="allset-container">
+                    <img src="assets/allset.png" class="allset-img" alt="All Set">
+                    <h2 class="allset-heading">You're all set!</h2>
+                    <h4 class="allset-description">Verify the updated search configuration JSON below, make changes &
+                        click on commit.</h4>
+                </div>
+                <mat-card class="export-cart">
+                    <mat-card-content>
+                        <div class="export-data">
+                            <textarea readonly class="export-data-area" [(ngModel)]="finalJSON"></textarea>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <div class="save-btn-container">
+                    <button mat-button class="create-btn">Save & Create</button>
+                    <br>
+                    <button class="reset-btn" (click)="stepper.reset()" mat-button>
+                        <mat-icon>restore</mat-icon>
+                        Reset
+                    </button>
+                    <button class="export-btn" mat-button (click)="exportData()">
+                        <mat-icon>logout</mat-icon>
+                        Export
+                    </button>
+                </div>
+
                 <div class="button-container">
                     <button class="back-btn" matStepperPrevious>Back</button>
                 </div>
             </mat-step>
+
         </mat-stepper>
     </div>
 </div>

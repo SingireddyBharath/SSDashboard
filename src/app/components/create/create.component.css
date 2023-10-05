@@ -21,7 +21,7 @@
 .button-container {
     position: absolute;
     right: 80px;
-    top: -105px;
+    top: -85px;
 }
 
 .next-btn {
@@ -91,30 +91,34 @@ form {
 }
 
 .custom-slide-toggle {
-    margin-top: 20px;
-    margin-left: 70px;
+    margin-top: 10px;
+    margin-left: 10%;
 }
 
 .llmConfig-container {
-    width: 700px;
+    width: 60%;
     margin: 0 auto;
 }
 
-.embedding-name-input {
-    width: 350px;
-    margin-left: 150px;
+mat-panel-description {
+    text-align: center;
+}
+
+.search-pref-div {
+    margin: 0 auto;
+    margin-top: 2%;
 }
 
 .embedding-container {
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
+    margin: 0 auto;
+    width: 70%;
+    margin-left: 20%;
+    margin-bottom: 20px;
 }
 
 /* input box  */
 ::ng-deep .mat-mdc-text-field-wrapper {
-    height: 45px !important;
+    height: 50px !important;
     text-align: justify;
     justify-content: center;
 }
@@ -124,7 +128,7 @@ form {
 }
 
 .example-chip-list {
-    width: 600px;
+    width: 100%;
     height: auto;
     font-size: 12px;
 }
@@ -132,12 +136,14 @@ form {
 .ignoreKeys-card {
     margin: 10px;
     padding: 5px;
-    width: 600px;
+    width: 180%;
     height: auto;
     margin-left: -130px;
 }
 
 .namespace-card {
+    width: 180%;
+    height: auto;
     margin-left: -130px;
 }
 
@@ -192,25 +198,33 @@ form {
     border-color: rgb(87, 160, 87) !important;
 }
 
-::ng-deep .mdc-switch__track::after {
+/* ::ng-deep .mdc-switch__track::after {
     background: #88AF67 !important;
-}
+} */
 
 ::ng-deep .mdc-switch__icons .ng-star-inserted {
     background-color: #88AF67 !important;
 }
 
-::ng-deep :root {
+/* ::ng-deep :root {
     --mdc-switch-selected-handle-color: #88AF67 !important;
-}
-
+} */
+/* 
 ::ng-deep .mat-mdc-slide-toggle {
     --mdc-switch-selected-handle-color: #88AF67 !important;
+} */
+
+.pinecone-div {
+    margin: 0 auto;
+    width: 30%;
+    padding: 2%;
 }
 
-
-.example-margin {
+.example-margin,
+.example-margin-topk {
     width: 300px;
+    margin-left: 19px;
+    margin-right: 10px;
 }
 
 .topK-slider {
@@ -218,10 +232,9 @@ form {
     display: flex;
 }
 
-.example-margin {
+.example-margin-topk {
     margin-top: -13px;
-    margin-left: 19px;
-    margin-right: 10px;
+
 }
 
 .example-name-label {
@@ -245,9 +258,6 @@ form {
 }
 
 /* prompt step */
-/* .add-prompt-btn {
-    margin-left: 60%;
-} */
 
 .custom-dropdown {
     width: 500px;
@@ -257,9 +267,111 @@ form {
 .add-prompt-container {
     display: flex;
     align-items: center;
-    margin-left: 70%;
+    margin-left: 88%;
 }
 
 .add-prompt-text {
     margin-right: 5px;
+}
+
+
+.custom-textarea {
+    padding: 20px;
+    width: 800px;
+    height: auto;
+    resize: vertical;
+}
+
+.text-area {
+    width: 800px;
+    height: auto;
+}
+
+.prompt-expansion {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.no-prompts-container {
+    text-align: center;
+    justify-content: center;
+    width: 500px;
+    margin: 0 auto;
+}
+
+.np-description {
+    color: #a2a2a2;
+    font-family: Roboto;
+    text-align: center;
+}
+
+.np-heading {
+    font-size: 2em;
+}
+
+.export-cart {
+    width: 700px;
+    height: 300px;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.export-data-area {
+    width: 600px;
+    padding: 20px;
+    height: 200px;
+}
+
+.allset-container,
+.save-btn-container {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 600px;
+    margin: 0 auto;
+}
+
+.allset-heading {
+    font-size: 1.5em;
+}
+
+.allset-description {
+    font-size: 1em;
+}
+
+.allset-img {
+    width: 130px;
+    height: 80px;
+}
+
+.save-btn-container {
+    margin: 0 auto;
+
+}
+
+.reset-btn,
+.export-btn {
+    border: 1px solid rgb(77, 77, 77);
+    width: 90px;
+    height: 30px;
+}
+
+.export-btn {
+    margin-left: 30px;
+}
+
+.create-btn {
+    background-color: #88AF67;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 130px;
+    height: 30px;
+}
+
+.fallback-toggle,
+.presentation-toggle,
+.followup-toggle {
+    margin-left: 82%;
 }
