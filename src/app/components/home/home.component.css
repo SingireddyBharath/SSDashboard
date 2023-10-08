@@ -1,9 +1,3 @@
-/* Common styles */
-mat-grid-list {
-  margin: 0px 70px;
-  padding: 0px;
-  overflow: hidden;
-}
 
 .grid-title {
   border: 1px solid black;
@@ -112,115 +106,28 @@ mat-grid-list {
   display: flex;
 }
 
-.edit-img {
-  position: absolute;
-  right: 55px;
-  bottom: 22px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-}
 
 .index-footer {
   position: inherit;
   display: flex;
 }
-
-#disabled-image {
-  position: absolute;
-  right: 55px;
-  bottom: 22px;
-  width: 30px;
-  height: 30px;
-  opacity: 0.5;
-  cursor: not-allowed;
+.responsive-grid {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* Media queries */
-@media only screen and (max-width: 768px) {
-
-  /* Adjust styles for smaller screens */
-  mat-grid-list {
-    margin: 0px 20px;
-  }
-
-  .grid-title {
-    width: 100%;
-  }
-
-  .home-header {
-    margin: 25px 20px;
-  }
-
-  .create-index-btn,
-  .more-info-btn {
-    width: 120px;
-    font-size: 10px;
-  }
-
-  .username {
-    font-size: 28px;
-    line-height: 32.5px;
-  }
-
-  .edit-img,
-  #disabled-image {
-    right: 20px;
-    bottom: 12px;
-    width: 20px;
-    height: 20px;
-  }
+.grid-title {
+  flex: 0 0 calc(33.333% - 10px);
+  margin: 10px;
 }
-
-@media only screen and (max-width: 480px) {
-
-  /* Further adjust styles for even smaller screens */
-  mat-grid-list {
-    margin: 0px 10px;
-  }
-
-  .grid-title {
-    height: auto;
-  }
-
-  .home-header {
-    margin: 25px 10px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .btn_container {
-    margin-left: auto;
-  }
-
-  .refresh-container {
-    flex-direction: column;
-    bottom: 60px;
-  }
-
-  .edit-img,
-  #disabled-image {
-    right: 10px;
-    bottom: 12px;
-    width: 20px;
-    height: 20px;
-  }
+.container {
+  display: flex;
+  justify-content: center;
 }
 
 .responsive-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
-}
-
-@media only screen and (max-width: 600px) {
-  .responsive-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-@media only screen and (max-width: 400px) {
-  .responsive-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }

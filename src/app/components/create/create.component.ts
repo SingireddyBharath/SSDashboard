@@ -1,7 +1,7 @@
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit, Version, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { Item } from './itemInterface';
 import { AppService } from 'src/app/services/API-services/app.service';
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class CreateComponent implements OnInit {
 
   topKvalue: number = 4;
-  isLinear = false;
+  isLinear = true;
   checked = false;
   panelOpenState = false;
   disabled = false;

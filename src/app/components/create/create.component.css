@@ -35,6 +35,17 @@
     margin-bottom: 10px;
 }
 
+.back-btn-last {
+    border: none;
+    width: 70px;
+    height: 28px;
+    border-radius: 5px;
+    color: black;
+    background-color: rgb(170, 175, 170);
+    cursor: pointer;
+    margin-top: 30px;
+}
+
 .blur {
     filter: blur(2px);
 }
@@ -52,7 +63,7 @@
 .stepper-container {
     padding: 0px 20px 0px 20px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 12px;
     /* background-color: green; */
 }
@@ -220,7 +231,7 @@ mat-panel-description {
 .pinecone-div {
     margin: 0 auto;
     width: 30%;
-    padding: 2%;
+    padding: 1%;
 }
 
 .slider-label {
@@ -295,6 +306,8 @@ mat-panel-description {
     width: 800px;
     height: auto;
     resize: vertical;
+    border-color: #88AF67;
+    outline-color: #88AF67;
 }
 
 .text-area {
@@ -436,7 +449,7 @@ mat-panel-description {
 
 .add-prompt-btn {
     display: inline-flex;
-        align-items: center;
+    align-items: center;
     height: 35px;
     width: 35px;
     border-radius: 50%;
@@ -444,8 +457,9 @@ mat-panel-description {
     border: none;
     cursor: pointer;
 }
-.add-icon{
+
+.add-icon {
     /* background-color: white; */
     color: white;
-   
+
 }
