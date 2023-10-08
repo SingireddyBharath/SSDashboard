@@ -1,16 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
 @Injectable()
 export class AppService {
   constructor(private http: HttpClient) { }
+  mockapi: string = "https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData"
 
   getData(): any {
     const url = 'https://retailassist-poc.kore.ai/semanticSearch/getAvaibleIndexProperties';
 
-    // const mockapi = "https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData"
     // const localhost = "http://localhost:3016/semanticSearch/getAvaibleIndexProperties"
 
     const httpOptions = {
@@ -20,13 +19,13 @@ export class AppService {
         "Stage": "Dev"
       })
     };
-    return this.http.get(url, httpOptions).pipe(map((data: any) => {
+    return this.http.get(this.mockapi, httpOptions).pipe(map((data: any) => {
       return data[0];
     }));
   }
 
   createIndex(indexData: any) {
-    return this.http.put<any>("https://6380f4bf786e112fe1bf0f9a.mockapi.io/getData/0", indexData);
+    return this.http.put<any>(this.mockapi + '/0', indexData);
   }
 
 }

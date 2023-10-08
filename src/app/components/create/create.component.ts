@@ -1,9 +1,11 @@
-import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormGroup, FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Version, ViewChild } from '@angular/core';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { Item } from './itemInterface';
+import { AppService } from 'src/app/services/API-services/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -13,7 +15,7 @@ import { Item } from './itemInterface';
 
 export class CreateComponent implements OnInit {
 
-  value: number = 4;
+  topKvalue: number = 4;
   isLinear = false;
   checked = false;
   panelOpenState = false;
@@ -26,144 +28,105 @@ export class CreateComponent implements OnInit {
   announcer: any;
   searchPref = true;
   addOnBlur = true;
+  finalIndexJSON: any = {}
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
-  foods: any[] = [
+  finalJSON = JSON.stringify(this.finalIndexJSON, null, 2);
+  instanceTypes: any[] = [
     { value: 'us-east-1' },
     { value: 'us-east-2' },
     { value: 'us-west-1' },
     { value: 'eu-central-1' },
     { value: 'ap-south-1' }
   ];
+  modelNames = [
+    "KoreAdaTextEmbedding003",
+    "Koreai-GPT35-Turbo",
+    "RA_Pinecone_LG",
+    "Add Custom Model"
+  ];
   pineconeCredentials!: FormGroup;
-  embeddingModelForm!: FormGroup;
-  consolidationModelForm!: FormGroup;
-  finetuningModelForm!: FormGroup;
-  followupModelForm!: FormGroup;
-  presentationModelForm!: FormGroup;
-  fallbackModelForm!: FormGroup;
   searchPreferenceForm!: FormGroup;
-  promptsForm!: FormGroup;
-  jsondata = {
-    "apiKey": "e95eb932-1e9f-4240-bc08-3afea1970d9e",
-    "env": "us-east-1-aws",
-    "accountName": "pranay.upadhaya@kore.com",
-    "fetchFromPIM": true,
-    "llmConfig": {
-      "embeddingModel": {
-        "isAzureOpenAI": true,
-        "model": "KoreAdaTextEmbedding002",
-        "api-version": "2023-03-15-preview"
-      },
-      "consolidatedQueryModel": {
-        "isAzureOpenAI": true,
-        "model": "Koreai-GPT35-Turbo",
-        "api-version": "2023-03-15-preview",
-        "temperature": 0.4
-      },
-      "finetunedModel": {
-        "url": "https://koresolutions.openai.azure.com/openai/deployments/",
-        "apiKey": "c5d8876bb5884a08981ea24e9298a4e6",
-        "isAzureOpenAI": true,
-        "model": "RA_Pinecone_LG",
-        "temperature": 0.4,
-        "api-version": "2022-12-01"
-      },
-      "followupModel": {
-        "isAzureOpenAI": true,
-        "model": "Koreai-GPT35-Turbo",
-        "api-version": "2023-03-15-preview",
-        "temperature": 0.4
-      },
-      "presentationModel": {
-        "isAzureOpenAI": true,
-        "model": "Koreai-GPT35-Turbo",
-        "api-version": "2023-03-15-preview",
-        "temperature": 0.4
-      },
-      "retryPresentationModel": {
-        "url": "https://gpt3dot5testmodel.openai.azure.com/openai/deployments/TestGPT3dot5Model/chat/completions?api-version=2023-03-15-preview",
-        "apiKey": "e583b6c2dd924ab6925580cd602fe681",
-        "isAzureOpenAI": true,
-        "model": "TestGPT3dot5Model",
-        "api-version": "2023-03-15-preview",
-        "temperature": 0.3
-      }
-    },
-    "topK": 7,
-    "vectorSearchIgnorableKeys": [
-      "modelCode",
-      "status"
-    ],
-    "namespaces": [
-      "Air Conditioners",
-      "Air Purifiers",
-      "Blu-ray & DVD Players",
-      "Burners & Drives",
-      "Cooking Appliances",
-      "Dehumidifiers",
-      "Digital Storage",
-      "Dishwashers",
-      "Laptops",
-      "Mobile Accessories",
-      "Monitors",
-      "Projectors",
-      "Refrigerators",
-      "Sound Bars",
-      "Speakers",
-      "TVs",
-      "Vacuums",
-      "Washers & Dryers",
-      "Wireless Headphones",
-      "Appliances Accessories",
-      "Computing Accessories",
-      "lg-pim-uat"
-    ]
-  }
+  llmSpecification!: FormGroup;
+
   availableOptions: string[] = [
     'CX_INIT_PROMPT',
     'FOLLOW_UP_QUERY_PROMPT',
     'CONSOLIDATE_QUERY_PROMPT',
     'SKU_SPECIFIC_PROMPT'
   ];
-  finalJSON = JSON.stringify(this.jsondata, null, 2);
-  ignorableKeys: Item[] = [{ name: 'Lemon' }, { name: 'Lime' }, { name: 'Apple' }];
-  namespaces: Item[] = [{ name: 'Lemon' }, { name: 'Lime' }, { name: 'Apple' }];
-  selectedValues: string[] = [];
+  availableModels: string[] = ["embeddingModel", "consolidatedQueryModel", "finetunedModel"]
+  ignorableKeys: Item[] = [{ name: 'example key' }];
+  namespaces: Item[] = [{ name: 'example namespace' }];
+
+
   selectedOptions: { option: string, prompt: string }[] = [];
 
-  constructor(private _formBuilder: FormBuilder) { }
+
+  constructor(private _formBuilder: FormBuilder, private appService: AppService, private router: Router) { }
 
   ngOnInit(): void {
     this.pineconeCredentials = this._formBuilder.group({
+      indexName: ['', Validators.required],
       userName: ['', Validators.required],
       apiKey: ['', Validators.required],
-      instanceType: ['', Validators.required]
+      instanceType: ['', Validators.required],
+      isAzureOpenAI: [true]
     });
-    this.embeddingModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.consolidationModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.finetuningModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.followupModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.presentationModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    this.fallbackModelForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
+    this.llmSpecification = this._formBuilder.group({
+      embeddingModel: this._formBuilder.group({
+        modelName: ['', Validators.required],
+        api_version: ['', Validators.required],
+        isAzureOpenAI: [true],
+        customModelName: ['', this.customModelValidator],
+      }),
+      consolidatedQueryModel: this._formBuilder.group({
+        modelName: ['', Validators.required],
+        api_version: ['', Validators.required],
+        isAzureOpenAI: [true],
+        customModelName: ['', this.customModelValidator],
+        temperature: [0]
+      }),
+      finetunedModel: this._formBuilder.group({
+        modelName: ['', Validators.required],
+        api_version: ['', Validators.required],
+        isAzureOpenAI: [true],
+        customModelName: ['', this.customModelValidator],
+        temperature: [0]
+      }),
+      followupModel: this._formBuilder.group({
+        modelName: [],
+        api_version: [],
+        isAzureOpenAI: [true],
+        customModelName: [],
+        temperature: [0]
+      }),
+      presentationModel: this._formBuilder.group({
+        modelName: [],
+        api_version: [],
+        isAzureOpenAI: [true],
+        customModelName: [],
+        temperature: [0]
+      }),
+      fallbackModel: this._formBuilder.group({
+        modelName: [],
+        api_version: [],
+        isAzureOpenAI: [true],
+        customModelName: [],
+        temperature: [0]
+      })
+    })
     this.searchPreferenceForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
+      namespaces: ['', Validators.required],
     });
-    this.promptsForm = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
+
+  }
+
+  customModelValidator(control: FormControl): ValidationErrors | null {
+    const modelName = control?.parent?.get('modelName')?.value;
+    if (modelName === 'Add Custom Model') {
+      return Validators.required(control);
+    }
+    return null;
   }
 
   add(event: MatChipInputEvent, array: Item[]): void {
@@ -205,7 +168,6 @@ export class CreateComponent implements OnInit {
   }
   updatePrompt(selectedOption: any) {
     console.log(`Updating prompt for ${selectedOption.option}: ${selectedOption.prompt}`);
-    console.log(this.selectedOptions);
   }
 
   clearPrompt(selectedOption: any) {
@@ -219,5 +181,99 @@ export class CreateComponent implements OnInit {
     anchor.download = 'pineconeIndex.json';
     document.body.appendChild(anchor);
     anchor.click();
+  }
+
+  updateTemperature(formGroupName: string, temp: any) {
+    this.llmSpecification.get(formGroupName)?.get('temperature')?.setValue(temp);
+  }
+
+  updateValidators(event: any, formGroupName: string) {
+    formGroupName = formGroupName.replace('Form', '')
+    const controlNames = ['customModelName', 'modelName', 'api_version'];
+    const formGroup = this.llmSpecification?.get(formGroupName);
+
+    if (event.checked) {
+      this.availableModels.push(formGroupName);
+    }
+    else this.availableModels.splice(this.availableModels.indexOf(formGroupName), 1);
+
+    controlNames.forEach((controlName) => {
+      const control = formGroup?.get(controlName);
+      if (event.checked) {
+        control?.setValidators([Validators.required]);
+      } else {
+        control?.clearValidators();
+      }
+      control?.updateValueAndValidity();
+    });
+  }
+  done() {
+    const formValues = this.readFormGroups({
+      pineconeCredentials: this.pineconeCredentials,
+      llmSpecification: this.llmSpecification,
+      searchPreferenceForm: this.searchPreferenceForm
+    });
+
+    const { pineconeCredentials, llmSpecification } = formValues;
+    const llmConfig: any = {};
+    for (const model of this.availableModels) {
+      const { modelName, api_version, temperature, isAzureOpenAI, customModelName } = llmSpecification[model];
+      llmConfig[model] = {
+        model: customModelName || modelName,
+        "api-version": api_version,
+        ...(temperature !== undefined && { temperature }),
+        isAzureOpenAI
+      };
+    }
+    const prompts: any = {};
+    this.selectedOptions.forEach(({ option, prompt }) => {
+      prompts[option] = prompt;
+    });
+
+    const { indexName, apiKey, instanceType, userName, isAzureOpenAI } = pineconeCredentials;
+    this.finalIndexJSON = {
+      indexName,
+      properties: {
+        apiKey,
+        env: instanceType,
+        accountName: userName,
+        fetchFromPIM: isAzureOpenAI,
+        supportQueryOnPrevResult: false,
+        llmConfig,
+        topK: this.topKvalue,
+        vectorSearchIgnorableKeys: this.ignorableKeys.map(item => item.name),
+        namespaces: this.namespaces.map(item => item.name)
+      },
+      prompts
+    };
+    this.finalJSON = JSON.stringify(this.finalIndexJSON, null, 2);
+  }
+
+  readFormGroups(formGroups: any) {
+    let values: any = {};
+    for (let groupKey in formGroups) {
+      let formGroup = formGroups[groupKey];
+      let groupValue: any = {};
+      for (let controlKey in formGroup.controls) {
+        groupValue[controlKey] = formGroup.controls[controlKey].value;
+      }
+      values[groupKey] = groupValue;
+    }
+    return values;
+  }
+
+  onSelectionChange(event: any) {
+    if (event.selectedIndex == 4) {
+      this.done();
+    }
+
+  }
+  createIndex() {
+    this.appService.createIndex(this.finalIndexJSON).subscribe(
+      (res) => {
+        console.log(res);
+        this.router.navigate(['/home'])
+      }
+    )
   }
 }

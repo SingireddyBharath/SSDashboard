@@ -35,6 +35,10 @@
     margin-bottom: 10px;
 }
 
+.blur {
+    filter: blur(2px);
+}
+
 .back-btn {
     border: none;
     width: 70px;
@@ -65,14 +69,8 @@ mat-label {
     font-size: 10px;
 }
 
-form {
-    justify-content: center;
-    align-items: center;
-    width: 350px;
-    margin-left: 350px;
-    padding-left: 70px;
-    padding-right: 50px;
-    margin-top: 10px;
+mat-hint {
+    font-size: 0.9em;
 }
 
 .apiKey-input {
@@ -91,6 +89,7 @@ form {
 }
 
 .custom-slide-toggle {
+    font-size: 0.8em;
     margin-top: 10px;
     margin-left: 10%;
 }
@@ -98,6 +97,7 @@ form {
 .llmConfig-container {
     width: 60%;
     margin: 0 auto;
+    margin-top: 3%;
 }
 
 mat-panel-description {
@@ -105,16 +105,24 @@ mat-panel-description {
 }
 
 .search-pref-div {
+    /* background-color: #88AF67; */
+    width: 30%;
     margin: 0 auto;
     margin-top: 2%;
 }
 
-.embedding-container {
+.form-model-container {
     margin: 0 auto;
     width: 70%;
-    margin-left: 20%;
+    max-width: 100%;
+    /* Add this line to limit the maximum width to 100% */
+    margin-left: 22%;
+    /* Remove the margin-left declaration */
+    margin-right: auto;
+    /* Add margin-right with the same value as margin-left */
     margin-bottom: 20px;
 }
+
 
 /* input box  */
 ::ng-deep .mat-mdc-text-field-wrapper {
@@ -189,30 +197,25 @@ mat-panel-description {
     border-radius: 0 25px 25px 0;
 }
 
-/* slider color */
-::ng-deep .mat-mdc-slider.mat-mdc-slider-with-animation .mdc-slider__track--active_fill {
-    border-color: rgb(92, 194, 92);
-}
 
-::ng-deep .mat-mdc-slider .mdc-slider__thumb-knob {
-    border-color: rgb(87, 160, 87) !important;
-}
+::ng-deep .mat-mdc-slider.mat-primary {
+    --mdc-slider-handle-color: #88AF67;
+    --mdc-slider-focus-handle-color: #88AF67;
+    --mdc-slider-active-track-color: #88AF67;
 
-/* ::ng-deep .mdc-switch__track::after {
-    background: #88AF67 !important;
-} */
+}
 
 ::ng-deep .mdc-switch__icons .ng-star-inserted {
     background-color: #88AF67 !important;
 }
 
-/* ::ng-deep :root {
-    --mdc-switch-selected-handle-color: #88AF67 !important;
-} */
-/* 
 ::ng-deep .mat-mdc-slide-toggle {
     --mdc-switch-selected-handle-color: #88AF67 !important;
-} */
+    --mdc-switch-selected-hover-handle-color: #88AF67 !important;
+    --mdc-switch-selected-track-color: #bff097 !important;
+    --mdc-switch-selected-hover-track-color: #bff097 !important;
+    --mdc-switch-selected-focu-track-color: #bff097 !important;
+}
 
 .pinecone-div {
     margin: 0 auto;
@@ -220,9 +223,22 @@ mat-panel-description {
     padding: 2%;
 }
 
+.slider-label {
+    margin-left: 4%;
+    font-size: 0.9em;
+}
+
+.slider-value-label {
+    font-size: 1em;
+}
+
+.example-margin {
+    width: 40%;
+}
+
 .example-margin,
 .example-margin-topk {
-    width: 300px;
+
     margin-left: 19px;
     margin-right: 10px;
 }
@@ -233,8 +249,8 @@ mat-panel-description {
 }
 
 .example-margin-topk {
+    width: 80%;
     margin-top: -13px;
-
 }
 
 .example-name-label {
@@ -246,9 +262,9 @@ mat-panel-description {
 .example-value-label {
     width: 50px;
     float: right;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
-    margin-left: 190px;
+    margin-left: 50%;
 }
 
 .example-label-container {
@@ -258,7 +274,6 @@ mat-panel-description {
 }
 
 /* prompt step */
-
 .custom-dropdown {
     width: 500px;
     /* Adjust the width as needed */
@@ -374,4 +389,63 @@ mat-panel-description {
 .presentation-toggle,
 .followup-toggle {
     margin-left: 82%;
+}
+
+/* stepper customization */
+
+::ng-deep .mat-horizontal-stepper-header-container {
+    padding: 0px 0 0px 0;
+}
+
+::ng-deep .mat-horizontal-line {
+    border-top-color: red;
+    border-top-style: dashed !important;
+    border-top-width: 2px !important;
+}
+
+
+::ng-deep .mat-step-header.mat-horizontal-stepper-header {
+    &[ng-reflect-selected="true"].mat-step-header {
+        background-color: #c4efbb;
+        border: 1px solid black;
+        border-radius: 40px;
+        height: 55px;
+        width: auto;
+        backdrop-filter: blur(5px);
+    }
+}
+
+
+
+::ng-deep .mat-step-header.mat-step-label {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+/*  icon circle */
+::ng-deep .mat-step-header .mat-step-icon {
+    background-color: #88AF67;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: rgb(80, 137, 237);
+    outline: 2px solid rgb(80, 137, 237);
+    outline-offset: 2px;
+}
+
+.add-prompt-btn {
+    display: inline-flex;
+        align-items: center;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color: #88AF67;
+    border: none;
+    cursor: pointer;
+}
+.add-icon{
+    /* background-color: white; */
+    color: white;
+   
 }

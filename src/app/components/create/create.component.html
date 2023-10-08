@@ -7,29 +7,36 @@
     </div>
 
     <div class="stepper-container">
-        <mat-stepper [linear]="isLinear" #stepper animationDuration="0">
+        <mat-stepper [linear]="isLinear" color="accent" #stepper animationDuration="0" (selectionChange)="onSelectionChange($event)">
 
             <mat-step [stepControl]="pineconeCredentials">
                 <ng-template matStepLabel>Account Data</ng-template>
                 <form class="pinecone-div" [formGroup]="pineconeCredentials">
                     <mat-form-field appearance="outline">
+                        <mat-label>Pinecone Index Name</mat-label>
+                        <input matInput formControlName="indexName">
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field appearance="outline">
                         <mat-label>Pinecone UserName</mat-label>
-                        <input matInput formControlName="userName" required>
+                        <input matInput formControlName="userName">
                     </mat-form-field>
                     <br>
                     <mat-form-field appearance="outline" class="apiKey-input">
                         <mat-label>Pinecone API Key</mat-label>
-                        <input matInput formControlName="apiKey" required>
+                        <input matInput formControlName="apiKey">
                     </mat-form-field>
                     <br>
                     <mat-form-field class="instance-input">
                         <mat-label>Pinecone Instance Type</mat-label>
-                        <mat-select formControlName="instanceType" required>
-                            <mat-option *ngFor="let food of foods" [value]="food.value">{{food.value}}</mat-option>
+                        <mat-select formControlName="instanceType">
+                            <mat-option *ngFor="let instance of instanceTypes"
+                                [value]="instance.value">{{instance.value}}</mat-option>
                         </mat-select>
                     </mat-form-field>
 
-                    <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
+                    <mat-slide-toggle class="custom-slide-toggle" formControlName="isAzureOpenAI" [checked]="true"
+                        color="primary">
                         Enable fetching Meta Data from PIM
                     </mat-slide-toggle>
 
@@ -37,249 +44,329 @@
                         <button matStepperNext class="next-btn">Next</button>
                     </div>
                 </form>
+
             </mat-step>
 
-            <mat-step>
+            <mat-step [stepControl]="llmSpecification">
                 <ng-template matStepLabel>LLM Specification</ng-template>
-                <div class="llmConfig-container">
-                    <mat-accordion>
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Embedding
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Embedding Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Pinecone UserName</mat-label>
-                                    <input matInput required>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>API Key</mat-label>
-                                    <input matInput required>
-                                </mat-form-field>
-                                <br>
-                                <span class="slider-label">Temparature</span>                                  
-                                  <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
-                                    step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks">
-                                    <input matSliderThumb>
-                                  </mat-slider>
-                               
-                                
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
+                <form [formGroup]="llmSpecification">
+                    <div class="llmConfig-container">
+                        <mat-accordion>
+
+                            <mat-expansion-panel formGroupName="embeddingModel">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Embedding
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Embedding Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div class="form-model-container">
+                                    <mat-form-field class="embedding-name-input" appearance="outline">
+                                        <mat-label>Embedding Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #embeddingModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="embeddingModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel formGroupName="consolidatedQueryModel">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Consolidation
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Consolidation Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+
+                                <div class="form-model-container">
+                                    <mat-form-field class="conslidation-name-input" appearance="outline">
+                                        <mat-label>Consolidation Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #consolidateModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="consolidateModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
+
+                                    <br>
+                                    <span class="slider-label">Temparature</span>
+                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                        (input)="updateTemperature('consolidatedQueryModel',conslidationTemp.value)">
+                                        <input formControlName="temperature" #conslidationTemp matSliderThumb>
+                                    </mat-slider>
+                                    <span class="slider-value-label">{{conslidationTemp.value}}</span>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel formGroupName="finetunedModel">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Fine Tuning
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Fine Tuning Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <div class="form-model-container">
+                                    <mat-form-field class="finetuing-name-input" appearance="outline">
+                                        <mat-label>Fine Tuning Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #finetuneModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="finetuneModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
+
+                                    <br>
+                                    <span class="slider-label">Temparature</span>
+                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                        (input)="updateTemperature('finetunedModel',finetuneTemp.value)">
+                                        <input formControlName="temperature" #finetuneTemp matSliderThumb>
+                                    </mat-slider>
+                                    <span class="slider-value-label">{{finetuneTemp.value}}</span>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel formGroupName="followupModel">
+
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Follow up
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Follow up Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+
+                                <mat-slide-toggle color="primary" class="followup-toggle"
+                                    (change)="updateValidators($event,'followupModel')">
+                                    ENABLE
                                 </mat-slide-toggle>
-                            </div>
 
-                        </mat-expansion-panel>
+                                <div class="form-model-container">
+                                    <mat-form-field class="followup-name-input" appearance="outline">
+                                        <mat-label>Follow up Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #followupModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="followupModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
+                                    <br>
+                                    <span class="slider-label">Temparature</span>
+                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                        (input)="updateTemperature('followupModel',followupTemp.value)">
+                                        <input formControlName="temperature" #followupTemp matSliderThumb>
+                                    </mat-slider>
+                                    <span class="slider-value-label">{{followupTemp.value}}</span>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+                            </mat-expansion-panel>
 
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Consolidation
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Consolidation Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
+                            <mat-expansion-panel formGroupName="presentationModel">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Presentation
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Presentation Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <mat-slide-toggle color="primary" class="presentation-toggle"
+                                    (change)="updateValidators($event,'presentationModel')">
+                                    ENABLE
                                 </mat-slide-toggle>
-                            </div>
+                                <div class="form-model-container">
+                                    <mat-form-field class="Presentation-name-input" appearance="outline">
+                                        <mat-label>Presentation Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #presentationModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="presentationModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
 
-                        </mat-expansion-panel>
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
 
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Fine Tuning
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Fine Tuning Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
 
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
+                                    <br>
+                                    <span class="slider-label">Temparature</span>
+                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                        (input)="updateTemperature('presentationModel',presentationTemp.value)">
+                                        <input formControlName="temperature" #presentationTemp matSliderThumb>
+                                    </mat-slider>
+                                    <span class="slider-value-label">{{presentationTemp.value}}</span>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel formGroupName="fallbackModel">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Fallback
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Fallback Model Configuration
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+
+                                <mat-slide-toggle color="primary" class="fallback-toggle"
+                                    (change)="updateValidators($event,'fallbackModel')">
+                                    ENABLE
                                 </mat-slide-toggle>
-                            </div>
 
-                        </mat-expansion-panel>
+                                <div class="form-model-container">
+                                    <mat-form-field class="Fallback-name-input" appearance="outline">
+                                        <mat-label>Fallback Model Name</mat-label>
+                                        <mat-select formControlName="modelName" #fallbackModel>
+                                            <mat-option *ngFor="let model of modelNames" [value]="model">
+                                                {{model}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <ng-container *ngIf="fallbackModel.value === 'Add Custom Model'">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Custom Model Name</mat-label>
+                                            <input formControlName="customModelName" matInput>
+                                        </mat-form-field>
+                                    </ng-container>
 
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Follow up
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Follow up Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <mat-slide-toggle color="primary" class="followup-toggle">ENABLE</mat-slide-toggle>
+                                    <br>
+                                    <mat-form-field class="api-version-input" appearance="outline">
+                                        <mat-label>API Version</mat-label>
+                                        <input matInput formControlName="api_version"
+                                            pattern="(20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])-preview">
+                                        <mat-hint align="start">Format: YYYY-MM-DD-preview</mat-hint>
+                                    </mat-form-field>
 
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Follow up Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Follow up Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
-                                </mat-slide-toggle>
-                            </div>
+                                    <br>
+                                    <span class="slider-label">Temparature</span>
+                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                        (input)="updateTemperature('fallbackModel',fallbackTemp.value)">
+                                        <input formControlName="temperature" #fallbackTemp matSliderThumb>
+                                    </mat-slider>
+                                    <span class="slider-value-label">{{fallbackTemp.value}}</span>
+                                    <br>
+                                    <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
+                                        [checked]="true" color="primary">
+                                        Enable fetching Meta Data from PIM
+                                    </mat-slide-toggle>
+                                </div>
+                            </mat-expansion-panel>
 
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Presentation
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Presentation Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <mat-slide-toggle color="primary" class="presentation-toggle">ENABLE</mat-slide-toggle>
-
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
-                                </mat-slide-toggle>
-                            </div>
-
-                        </mat-expansion-panel>
-
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Fallback
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    Fallback Model Configuration
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-
-                            <mat-slide-toggle color="primary" class="fallback-toggle">ENABLE</mat-slide-toggle>
-
-
-                            <div class="embedding-container">
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-form-field class="embedding-name-input" appearance="outline">
-                                    <mat-label>Embedding Model Name</mat-label>
-                                    <mat-select required>
-                                        <mat-option *ngFor="let food of foods" [value]="food.value">
-                                            {{food.value}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <br>
-                                <mat-slide-toggle class="custom-slide-toggle" [checked]="true" color="primary">
-                                    Enable fetching Meta Data from PIM
-                                </mat-slide-toggle>
-                            </div>
-
-                        </mat-expansion-panel>
-
-                    </mat-accordion>
-                </div>
+                        </mat-accordion>
+                    </div>
+                </form>
                 <div class="button-container">
                     <button class="next-btn" matStepperNext>Next</button><br>
                     <button class="back-btn" matStepperPrevious>Back</button>
                 </div>
             </mat-step>
 
-            <mat-step>
+            <mat-step [stepControl]="searchPreferenceForm">
                 <ng-template matStepLabel>Search Preferences</ng-template>
                 <form class="search-pref-div" [formGroup]="searchPreferenceForm">
                     <mat-card class="topK-container">
@@ -292,7 +379,7 @@
                                 <span>0</span>
                                 <mat-slider class="example-margin-topk" [disabled]="disabled" [max]="max" [min]="min"
                                     [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks"
-                                    [(ngModel)]="value">
+                                    [(ngModel)]="topKvalue">
                                     <input matSliderThumb #slider>
                                 </mat-slider>
                                 <span>10</span>
@@ -339,8 +426,8 @@
                                 </mat-chip-row>
                                 <input placeholder="New namespace" [matChipInputFor]="chipGrid1"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                    [matChipInputAddOnBlur]="addOnBlur"
-                                    (matChipInputTokenEnd)="add($event, namespaces)" />
+                                    [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event, namespaces)"
+                                    formControlName="namespaces" />
                             </mat-chip-grid>
                         </mat-form-field>
                     </div>
@@ -352,17 +439,14 @@
             </mat-step>
 
             <mat-step>
-
                 <ng-template matStepLabel>Prompting</ng-template>
-
                 <div class="add-prompt-container" *ngIf="availableOptions.length > 0">
                     <span class="add-prompt-text">Add Prompt</span>
-                    <button class="add-prompt-btn" mat-icon-button [matMenuTriggerFor]="dropdownMenu"
+                    <button class="add-prompt-btn" [matMenuTriggerFor]="dropdownMenu"
                         aria-label="Expand dropdown">
-                        <mat-icon>add_circle</mat-icon>
+                        <mat-icon class="add-icon">add</mat-icon>
                     </button>
                 </div>
-
                 <mat-menu #dropdownMenu="matMenu" class="custom-dropdown">
                     <ng-container *ngFor="let option of availableOptions">
                         <button mat-menu-item (click)="onOptionSelected(option)">
@@ -400,7 +484,7 @@
                     </div>
                 </ng-template>
                 <div class="button-container">
-                    <button class="next-btn" matStepperNext>Next</button><br>
+                    <button class="next-btn" (click)="done()" matStepperNext>Next</button><br>
                     <button class="back-btn" matStepperPrevious>Back</button>
                 </div>
             </mat-step>
@@ -421,7 +505,7 @@
                     </mat-card-content>
                 </mat-card>
                 <div class="save-btn-container">
-                    <button mat-button class="create-btn">Save & Create</button>
+                    <button mat-button class="create-btn" (click)="createIndex()">Save & Create</button>
                     <br>
                     <button class="reset-btn" (click)="stepper.reset()" mat-button>
                         <mat-icon>restore</mat-icon>
