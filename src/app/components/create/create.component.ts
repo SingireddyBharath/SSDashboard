@@ -7,7 +7,6 @@ import { Item } from './itemInterface';
 import { AppService } from 'src/app/services/API-services/app.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
 @Component({
   selector: 'app-create',
@@ -18,17 +17,13 @@ import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 export class CreateComponent implements OnInit {
 
   topKvalue: number = 4;
-  isLinear = true;
-  checked = false;
-  panelOpenState = false;
-  disabled = false;
+  isLinear = false;
   max = 10;
   min = 0;
   showTicks = false;
   step = 0.5;
   thumbLabel = true;
   announcer: any;
-  searchPref = true;
   addOnBlur = true;
   finalIndexJSON: any = {}
   readonly separatorKeysCodes = [ENTER, COMMA] as const;

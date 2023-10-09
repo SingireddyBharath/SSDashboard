@@ -28,11 +28,16 @@ mat-toolbar {
 }
 
 ::ng-deep .logout-success-snackbar {
-    --mdc-snackbar-container-color: rgb(73, 168, 9) !important;
+    --mdc-snackbar-container-color: rgb(94, 185, 33) !important;
     --mdc-snackbar-supporting-text-color: white;
+    --mat-mdc-snack-bar-button-color: white;
 }
 
 ::ng-deep .logout-success-snackbar button {
     border: none;
-    --mat-mdc-snackbar-button-color: white;
+    --mat-mdc-snack-bar-button-color: white;
+}
+
+.mat-mdc-snack-bar-button .logout-success-snackbar {
+    color: white;
 }

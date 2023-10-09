@@ -7,7 +7,8 @@
     </div>
 
     <div class="stepper-container">
-        <mat-stepper [linear]="isLinear" color="accent" #stepper animationDuration="0" (selectionChange)="onSelectionChange($event)">
+        <mat-stepper [linear]="isLinear" color="accent" #stepper animationDuration="0"
+            (selectionChange)="onSelectionChange($event)">
 
             <mat-step [stepControl]="pineconeCredentials">
                 <ng-template matStepLabel>Account Data</ng-template>
@@ -128,7 +129,7 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min"
                                         step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('consolidatedQueryModel',conslidationTemp.value)">
                                         <input formControlName="temperature" #conslidationTemp matSliderThumb>
@@ -178,7 +179,7 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min"
                                         step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('finetunedModel',finetuneTemp.value)">
                                         <input formControlName="temperature" #finetuneTemp matSliderThumb>
@@ -233,7 +234,7 @@
                                     </mat-form-field>
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min"
                                         step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('followupModel',followupTemp.value)">
                                         <input formControlName="temperature" #followupTemp matSliderThumb>
@@ -287,7 +288,7 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min"
                                         step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('presentationModel',presentationTemp.value)">
                                         <input formControlName="temperature" #presentationTemp matSliderThumb>
@@ -343,7 +344,7 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [disabled]="disabled" [max]="max" [min]="min"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min"
                                         step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('fallbackModel',fallbackTemp.value)">
                                         <input formControlName="temperature" #fallbackTemp matSliderThumb>
@@ -377,7 +378,7 @@
                             </div>
                             <div class="topK-slider">
                                 <span>0</span>
-                                <mat-slider class="example-margin-topk" [disabled]="disabled" [max]="max" [min]="min"
+                                <mat-slider class="example-margin-topk" [max]="max" [min]="min"
                                     [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                     [(ngModel)]="topKvalue">
                                     <input matSliderThumb #slider>
@@ -442,8 +443,7 @@
                 <ng-template matStepLabel>Prompting</ng-template>
                 <div class="add-prompt-container" *ngIf="availableOptions.length > 0">
                     <span class="add-prompt-text">Add Prompt</span>
-                    <button class="add-prompt-btn" [matMenuTriggerFor]="dropdownMenu"
-                        aria-label="Expand dropdown">
+                    <button class="add-prompt-btn" [matMenuTriggerFor]="dropdownMenu" aria-label="Expand dropdown">
                         <mat-icon class="add-icon">add</mat-icon>
                     </button>
                 </div>
