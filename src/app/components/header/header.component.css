@@ -26,3 +26,13 @@ mat-toolbar {
     margin: 0;
     color: red;
 }
+
+::ng-deep .logout-success-snackbar {
+    --mdc-snackbar-container-color: rgb(73, 168, 9) !important;
+    --mdc-snackbar-supporting-text-color: white;
+}
+
+::ng-deep .logout-success-snackbar button {
+    border: none;
+    --mat-mdc-snackbar-button-color: white;
+}

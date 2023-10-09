@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) { }
 
   togglePasswordVisibility() {
@@ -34,6 +36,12 @@ export class LoginComponent implements OnInit {
     console.log(userDetails);
     const response: any = await this.authService.validateUser().toPromise();
     if (response[0].userName === userDetails.userName && response[0].password === userDetails.password) {
+      this._snackBar.open("Login Successfull", 'X', {
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        duration: 3000,
+        panelClass: ['login-success-snackbar']
+      });
       this.authService.notifyLoginSuccess();
       this.router.navigate(['/home']);
       localStorage.setItem('accessToken', 'qewqwefqw1niu7v2e3mcqu7e')

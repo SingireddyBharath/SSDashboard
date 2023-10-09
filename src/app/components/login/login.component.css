@@ -115,10 +115,12 @@ input {
     bottom: 0;
     font-size: 20px;
 }
+
 button.login-btn[disabled] {
     pointer-events: none;
     opacity: 0.6;
 }
+
 .error-message {
     color: red;
     margin-left: 10px;
@@ -127,4 +129,15 @@ button.login-btn[disabled] {
 
 .hide {
     visibility: hidden;
+}
+
+
+::ng-deep .login-success-snackbar {
+    --mdc-snackbar-container-color: rgb(73, 168, 9) !important;
+    --mdc-snackbar-supporting-text-color: white;
+}
+
+::ng-deep .login-success-snackbar button {
+    border: none;
+    --mat-mdc-snack-bar-button-color: white;
 }

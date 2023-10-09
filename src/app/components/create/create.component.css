@@ -467,3 +467,27 @@ mat-panel-description {
     color: white;
 
 }
+
+/* snakbar styling */
+::ng-deep .error-snackbar {
+    --mdc-snackbar-container-color: rgb(196, 60, 36) !important;
+    color: rgb(195, 190, 190);
+    --mdc-snackbar-supporting-text-color: white;
+}
+
+::ng-deep .error-snackbar button {
+    background-color: white;
+    --mat-mdc-snack-bar-button-color: white;
+}
+
+::ng-deep .success-snackbar {
+    --mdc-snackbar-container-color: rgb(73, 168, 9) !important;
+    color: rgb(195, 190, 190);
+    --mdc-snackbar-supporting-text-color: white;
+}
+
+::ng-deep .success-snackbar button {
+    border: none;
+    background-color: white;
+    --mat-mdc-snack-bar-button-color: white;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-services/auth.service';
 import { SharedService } from 'src/app/services/shared-services/shared.service';
@@ -20,12 +21,23 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  constructor(private router: Router, private sharedService: SharedService, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private sharedService: SharedService,
+    private authService: AuthService,
+    private _snackBar: MatSnackBar
+  ) { }
 
   logout(): void {
     this.showCustomWindow = true;
     this.isloggedIn = false;
-    localStorage.removeItem('accessToken');    
+    localStorage.removeItem('accessToken');
+    this._snackBar.open("Logout Successfull", 'X', {
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      duration: 3000,
+      panelClass: ['logout-success-snackbar']
+    });
     this.router.navigate(["/login"]);
   }
 

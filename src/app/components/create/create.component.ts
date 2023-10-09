@@ -6,6 +6,8 @@ import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { Item } from './itemInterface';
 import { AppService } from 'src/app/services/API-services/app.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { error } from 'ajv/dist/vocabularies/applicator/dependencies';
 
 @Component({
   selector: 'app-create',
@@ -62,7 +64,7 @@ export class CreateComponent implements OnInit {
   selectedOptions: { option: string, prompt: string }[] = [];
 
 
-  constructor(private _formBuilder: FormBuilder, private appService: AppService, private router: Router) { }
+  constructor(private _formBuilder: FormBuilder, private appService: AppService, private router: Router, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.pineconeCredentials = this._formBuilder.group({
@@ -181,6 +183,7 @@ export class CreateComponent implements OnInit {
     anchor.download = 'pineconeIndex.json';
     document.body.appendChild(anchor);
     anchor.click();
+
   }
 
   updateTemperature(formGroupName: string, temp: any) {
@@ -247,6 +250,7 @@ export class CreateComponent implements OnInit {
       prompts
     };
     this.finalJSON = JSON.stringify(this.finalIndexJSON, null, 2);
+
   }
 
   readFormGroups(formGroups: any) {
@@ -269,11 +273,29 @@ export class CreateComponent implements OnInit {
 
   }
   createIndex() {
-    this.appService.createIndex(this.finalIndexJSON).subscribe(
-      (res) => {
-        console.log(res);
-        this.router.navigate(['/home'])
-      }
-    )
+    this._snackBar.open("Index Created Successfully", 'close', {
+      duration: 3000,
+      panelClass: ['success-snackbar']
+    });
+    this.router.navigate(['/home'])
+    console.log(this.finalIndexJSON);
+    // this.appService.createIndex(this.finalIndexJSON).subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //     this._snackBar.open("exported successfully", 'X', {
+    //       duration: 3000
+    //     });
+    //     this.router.navigate(['/home'])
+
+    //   },
+    //   (error: any) => {
+    //        this._snackBar.open("Error in creating index", 'X', {
+    //   duration: 3000,
+    //     panelClass: ['error-snackbar']
+    // });
+    //     this.router.navigate(['/home'])
+
+    //   }
+    // )
   }
 }

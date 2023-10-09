@@ -30,7 +30,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { NgFor } from '@angular/common';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +65,8 @@ import { NgFor } from '@angular/common';
     MatSelectModule,
     MatExpansionModule,
     MatSliderModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSnackBarModule
   ],
   providers: [AppService, AuthService, SharedService],
   bootstrap: [AppComponent]
