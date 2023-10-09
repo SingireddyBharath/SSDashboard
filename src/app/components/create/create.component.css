@@ -410,21 +410,21 @@ mat-panel-description {
     padding: 0px 0 0px 0;
 }
 
-::ng-deep .mat-horizontal-line {
-    border-top-color: red;
-    border-top-style: dashed !important;
-    border-top-width: 2px !important;
+::ng-deep .mat-stepper-horizontal-line {
+    border-top-color: rgb(77, 77, 77) !important;
+    border-top-style: dotted !important;
+    border-top-width: 1.5px !important;
 }
 
 
 ::ng-deep .mat-step-header.mat-horizontal-stepper-header {
     &[ng-reflect-selected="true"].mat-step-header {
-        background-color: #c4efbb;
-        border: 1px solid black;
-        border-radius: 40px;
-        height: 55px;
-        width: auto;
-        backdrop-filter: blur(5px);
+        background-color: #c4efbb !important;
+        border: 1px solid black !important;
+        border-radius: 40px !important;
+        height: 55px !important;
+        width: auto !important;
+        backdrop-filter: blur(5px) !important;
     }
 }
 
