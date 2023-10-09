@@ -431,6 +431,8 @@ mat-panel-description {
 
 ::ng-deep .mat-step-header.mat-accent {
     border-radius: 40px !important;
+    height: 55px !important;
+    width: auto !important;
 }
 
 
@@ -465,7 +467,6 @@ mat-panel-description {
 .add-icon {
     /* background-color: white; */
     color: white;
-
 }
 
 /* snakbar styling */
@@ -490,4 +491,18 @@ mat-panel-description {
     border: none;
     background-color: white;
     --mat-mdc-snack-bar-button-color: white;
+}
+
+.model-remove-btn {
+    margin-right: 2%;
+}
+
+.add-model-container {
+    display: flex;
+    align-items: center;
+    margin-left: 110%;
+    width: 100px;
+}
+.desc-text{
+    margin-left: -33px;
 }

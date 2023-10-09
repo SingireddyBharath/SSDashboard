@@ -52,21 +52,37 @@
                 <ng-template matStepLabel>LLM Specification</ng-template>
                 <form [formGroup]="llmSpecification">
                     <div class="llmConfig-container">
+                        <div *ngIf="availableCustomModels.length > 0">
+                            <div class="add-model-container">
+                                <span class="add-prompt-text">Add Model</span>
+                                <button class="add-prompt-btn" [matMenuTriggerFor]="modelDropdownMenu"
+                                    aria-label="Expand dropdown">
+                                    <mat-icon class="add-icon">add</mat-icon>
+                                </button>
+                            </div>
+                            <mat-menu #modelDropdownMenu="matMenu" class="custom-dropdown">
+                                <ng-container *ngFor="let modelName of availableCustomModels">
+                                    <button mat-menu-item (click)="addCustomModel(modelName)">
+                                        {{ modelName }}
+                                    </button>
+                                </ng-container>
+                            </mat-menu>
+                        </div>
                         <mat-accordion>
-
                             <mat-expansion-panel formGroupName="embeddingModel">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         Embedding
                                     </mat-panel-title>
-                                    <mat-panel-description>
+                                    <mat-panel-description class="desc-text">
                                         Embedding Model Configuration
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                                 <div class="form-model-container">
                                     <mat-form-field class="embedding-name-input" appearance="outline">
                                         <mat-label>Embedding Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #embeddingModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(embeddingModel.value,
+                                        'embeddingModel')" #embeddingModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -88,7 +104,7 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
                             </mat-expansion-panel>
@@ -98,7 +114,7 @@
                                     <mat-panel-title>
                                         Consolidation
                                     </mat-panel-title>
-                                    <mat-panel-description>
+                                    <mat-panel-description class="desc-text">
                                         Consolidation Model Configuration
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
@@ -106,7 +122,8 @@
                                 <div class="form-model-container">
                                     <mat-form-field class="conslidation-name-input" appearance="outline">
                                         <mat-label>Consolidation Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #consolidateModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(consolidateModel.value,
+                                        'consolidatedQueryModel')" #consolidateModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -129,8 +146,8 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [max]="max" [min]="min"
-                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min" step="1"
+                                        [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('consolidatedQueryModel',conslidationTemp.value)">
                                         <input formControlName="temperature" #conslidationTemp matSliderThumb>
                                     </mat-slider>
@@ -138,13 +155,13 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
 
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel formGroupName="finetunedModel">
+                            <mat-expansion-panel *ngIf="showFinetuneModel" formGroupName="finetunedModel">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         Fine Tuning
@@ -152,11 +169,16 @@
                                     <mat-panel-description>
                                         Fine Tuning Model Configuration
                                     </mat-panel-description>
+                                    <button class="model-remove-btn" mat-icon-button color="warn"
+                                        (click)="removeModelPanel('Finetune Model')" aria-label="Remove panel">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
                                 </mat-expansion-panel-header>
                                 <div class="form-model-container">
                                     <mat-form-field class="finetuing-name-input" appearance="outline">
                                         <mat-label>Fine Tuning Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #finetuneModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(finetuneModel.value,
+                                        'finetunedModel')" #finetuneModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -179,8 +201,8 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [max]="max" [min]="min"
-                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min" step="1"
+                                        [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('finetunedModel',finetuneTemp.value)">
                                         <input formControlName="temperature" #finetuneTemp matSliderThumb>
                                     </mat-slider>
@@ -188,13 +210,13 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
 
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel formGroupName="followupModel">
+                            <mat-expansion-panel *ngIf="showFollowupModel" formGroupName="followupModel">
 
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
@@ -203,17 +225,20 @@
                                     <mat-panel-description>
                                         Follow up Model Configuration
                                     </mat-panel-description>
+                                    <button mat-icon-button class="model-remove-btn" color="warn"
+                                        (click)="removeModelPanel('Followup Model')" aria-label="Remove panel">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
                                 </mat-expansion-panel-header>
-
-                                <mat-slide-toggle color="primary" class="followup-toggle"
+                                <!-- <mat-slide-toggle color="primary" class="followup-toggle"
                                     (change)="updateValidators($event,'followupModel')">
                                     ENABLE
-                                </mat-slide-toggle>
-
+                                </mat-slide-toggle> -->
                                 <div class="form-model-container">
                                     <mat-form-field class="followup-name-input" appearance="outline">
                                         <mat-label>Follow up Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #followupModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(followupModel.value,
+                                        'followupModel')" #followupModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -234,8 +259,8 @@
                                     </mat-form-field>
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [max]="max" [min]="min"
-                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min" step="1"
+                                        [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('followupModel',followupTemp.value)">
                                         <input formControlName="temperature" #followupTemp matSliderThumb>
                                     </mat-slider>
@@ -243,12 +268,12 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel formGroupName="presentationModel">
+                            <mat-expansion-panel *ngIf="showPresentationModel" formGroupName="presentationModel">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         Presentation
@@ -256,15 +281,20 @@
                                     <mat-panel-description>
                                         Presentation Model Configuration
                                     </mat-panel-description>
+                                    <button class="model-remove-btn" mat-icon-button color="warn"
+                                        (click)="removeModelPanel('Presentation Model')" aria-label="Remove panel">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
                                 </mat-expansion-panel-header>
-                                <mat-slide-toggle color="primary" class="presentation-toggle"
+                                <!-- <mat-slide-toggle color="primary" class="presentation-toggle"
                                     (change)="updateValidators($event,'presentationModel')">
                                     ENABLE
-                                </mat-slide-toggle>
+                                </mat-slide-toggle> -->
                                 <div class="form-model-container">
                                     <mat-form-field class="Presentation-name-input" appearance="outline">
                                         <mat-label>Presentation Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #presentationModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(presentationModel.value,
+                                        'presentationModel')" #presentationModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -288,8 +318,8 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [max]="max" [min]="min"
-                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min" step="1"
+                                        [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('presentationModel',presentationTemp.value)">
                                         <input formControlName="temperature" #presentationTemp matSliderThumb>
                                     </mat-slider>
@@ -297,13 +327,13 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
 
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel formGroupName="fallbackModel">
+                            <mat-expansion-panel *ngIf="showFallbackModel" formGroupName="fallbackModel">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         Fallback
@@ -311,17 +341,22 @@
                                     <mat-panel-description>
                                         Fallback Model Configuration
                                     </mat-panel-description>
+                                    <button class="model-remove-btn" mat-icon-button color="warn"
+                                        (click)="removeModelPanel('Fallback Model')" aria-label="Remove panel">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
                                 </mat-expansion-panel-header>
 
-                                <mat-slide-toggle color="primary" class="fallback-toggle"
+                                <!-- <mat-slide-toggle color="primary" class="fallback-toggle"
                                     (change)="updateValidators($event,'fallbackModel')">
                                     ENABLE
-                                </mat-slide-toggle>
+                                </mat-slide-toggle> -->
 
                                 <div class="form-model-container">
                                     <mat-form-field class="Fallback-name-input" appearance="outline">
                                         <mat-label>Fallback Model Name</mat-label>
-                                        <mat-select formControlName="modelName" #fallbackModel>
+                                        <mat-select formControlName="modelName" (selectionChange)="updateCustomValidity(fallbackModel.value,
+                                        'fallbackModel')" #fallbackModel>
                                             <mat-option *ngFor="let model of modelNames" [value]="model">
                                                 {{model}}
                                             </mat-option>
@@ -344,8 +379,8 @@
 
                                     <br>
                                     <span class="slider-label">Temparature</span>
-                                    <mat-slider class="example-margin" [max]="max" [min]="min"
-                                        step="1" [discrete]="thumbLabel" [showTickMarks]="showTicks"
+                                    <mat-slider class="example-margin" [max]="max" [min]="min" step="1"
+                                        [discrete]="thumbLabel" [showTickMarks]="showTicks"
                                         (input)="updateTemperature('fallbackModel',fallbackTemp.value)">
                                         <input formControlName="temperature" #fallbackTemp matSliderThumb>
                                     </mat-slider>
@@ -353,7 +388,7 @@
                                     <br>
                                     <mat-slide-toggle formControlName="isAzureOpenAI" class="custom-slide-toggle"
                                         [checked]="true" color="primary">
-                                        Enable fetching Meta Data from PIM
+                                        isAzureOpenAI
                                     </mat-slide-toggle>
                                 </div>
                             </mat-expansion-panel>
@@ -378,9 +413,8 @@
                             </div>
                             <div class="topK-slider">
                                 <span>0</span>
-                                <mat-slider class="example-margin-topk" [max]="max" [min]="min"
-                                    [step]="step" [discrete]="thumbLabel" [showTickMarks]="showTicks"
-                                    [(ngModel)]="topKvalue">
+                                <mat-slider class="example-margin-topk" [max]="max" [min]="min" [step]="step"
+                                    [discrete]="thumbLabel" [showTickMarks]="showTicks" [(ngModel)]="topKvalue">
                                     <input matSliderThumb #slider>
                                 </mat-slider>
                                 <span>10</span>
