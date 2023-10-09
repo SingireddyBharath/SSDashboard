@@ -2391,7 +2391,7 @@ html {
     --mat-stepper-header-error-state-icon-background-color: transparent
 }
 
-html .mat-step-header.mat-horizontal-stepper-header {
+html .mat-step-header.mat-horizontal-stepper-header.mat-accent {
     &[ng-reflect-selected="true"].mat-step-header {
         background-color: #c4efbb !important;
         border: 1px solid black !important;

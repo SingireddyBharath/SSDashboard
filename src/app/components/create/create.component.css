@@ -412,8 +412,8 @@ mat-panel-description {
 
 ::ng-deep .mat-stepper-horizontal-line {
     border-top-color: rgb(77, 77, 77) !important;
-    border-top-style: dotted !important;
-    border-top-width: 1.5px !important;
+    border-top-style: solid !important;
+    border-top-width: 1px !important;
 }
 
 
