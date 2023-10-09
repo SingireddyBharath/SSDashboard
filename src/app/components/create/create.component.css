@@ -417,7 +417,7 @@ mat-panel-description {
 }
 
 
-::ng-deep .mat-step-header.mat-horizontal-stepper-header {
+::ng-deep .mat-step-header.mat-horizontal-stepper-header.mat-accent {
     &[ng-reflect-selected="true"].mat-step-header {
         background-color: #c4efbb !important;
         border: 1px solid black !important;
@@ -428,6 +428,10 @@ mat-panel-description {
     }
 }
 
+
+.mat-step-header.mat-accent {
+    border-radius: 40px !important;
+}
 
 
 ::ng-deep .mat-step-header.mat-step-label {
