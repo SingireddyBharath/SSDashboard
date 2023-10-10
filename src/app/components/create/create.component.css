@@ -98,11 +98,15 @@ mat-hint {
 .mdc-switch:enabled .mdc-switch__track::after {
     background-color: green;
 }
-
+.enable-pim-data-toggle{
+    font-size: 0.8em;
+        margin-top: 10px;
+        margin-left: 65px;
+}
 .custom-slide-toggle {
     font-size: 0.8em;
     margin-top: 10px;
-    margin-left: 10%;
+    margin-left: 110px;
 }
 
 .llmConfig-container {
@@ -293,7 +297,8 @@ mat-panel-description {
 .add-prompt-container {
     display: flex;
     align-items: center;
-    margin-left: 88%;
+    margin-left: 85%;
+    margin-top: 20px;
 }
 
 .add-prompt-text {
@@ -318,8 +323,12 @@ mat-panel-description {
 .prompt-expansion {
     width: 900px;
     margin: 0 auto;
+    
 }
-
+.prompts-container{
+    margin: 0 auto;
+    margin: 10px;
+}
 .no-prompts-container {
     text-align: center;
     justify-content: center;

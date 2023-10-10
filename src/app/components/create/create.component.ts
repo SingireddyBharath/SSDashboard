@@ -134,7 +134,6 @@ export class CreateComponent implements OnInit {
       control?.clearValidators();
     }
     control?.updateValueAndValidity();
-    console.log(control);
 
   }
   add(event: MatChipInputEvent, array: Item[]): void {
@@ -174,8 +173,13 @@ export class CreateComponent implements OnInit {
     this.selectedOptions = this.selectedOptions.filter(op => op.option !== value)
     this.availableOptions.push(value);
   }
+  isEditMode: boolean = true;
   updatePrompt(selectedOption: any) {
     console.log(`Updating prompt for ${selectedOption.option}: ${selectedOption.prompt}`);
+    this.isEditMode = false;
+  }
+  editPrompt() {
+    this.isEditMode = true;
   }
 
   clearPrompt(selectedOption: any) {
@@ -223,7 +227,6 @@ export class CreateComponent implements OnInit {
       control?.updateValueAndValidity();
     });
 
-    console.log(this.llmSpecification);
   }
 
   done() {
@@ -292,7 +295,6 @@ export class CreateComponent implements OnInit {
       panelClass: ['success-snackbar']
     });
     this.router.navigate(['/home'])
-    console.log(this.finalIndexJSON);
     // this.appService.createIndex(this.finalIndexJSON).subscribe(
     //   (res) => {
     //     console.log(res);
