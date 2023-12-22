@@ -36,7 +36,7 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <mat-slide-toggle class="custom-slide-toggle" formControlName="isAzureOpenAI" [checked]="true"
+                    <mat-slide-toggle class="enable-pim-data-toggle" formControlName="isAzureOpenAI" [checked]="true"
                         color="primary">
                         Enable fetching Meta Data from PIM
                     </mat-slide-toggle>
@@ -488,7 +488,7 @@
                         </button>
                     </ng-container>
                 </mat-menu>
-                <ng-container *ngIf="selectedOptions.length > 0;else elseBlockContent">
+                <ng-container class="prompts-container" *ngIf="selectedOptions.length > 0;else elseBlockContent">
                     <ng-container *ngFor="let selectedOption of selectedOptions; let i = index">
                         <mat-expansion-panel class="prompt-expansion">
                             <mat-expansion-panel-header>
@@ -500,11 +500,13 @@
                             </mat-expansion-panel-header>
 
                             <textarea class="custom-textarea" placeholder="Enter prompt"
-                                [(ngModel)]="selectedOption.prompt"></textarea>
+                                [(ngModel)]="selectedOption.prompt" [readonly]="!isEditMode"></textarea>
                             <mat-action-row>
-                                <button mat-button color="primary"
-                                    (click)="updatePrompt(selectedOption)">Update</button>
-                                <button mat-button (click)="clearPrompt(selectedOption)">Clear</button>
+                                <button mat-button color="primary" *ngIf="!isEditMode"
+                                    (click)="editPrompt()">Edit</button>
+                                <button mat-button color="primary" *ngIf="isEditMode"
+                                    (click)="updatePrompt(selectedOption)">Save</button>
+                                <button color="warn" mat-button (click)="clearPrompt(selectedOption)">Clear</button>
                             </mat-action-row>
                         </mat-expansion-panel>
                     </ng-container>
